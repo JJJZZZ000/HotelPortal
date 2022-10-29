@@ -2,11 +2,28 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
-import './url.js';
+import { Layout, Select, Row, Col, Space, Typography, Divider, PageHeader, Menu, icon } from "antd";
+import Room_list from './Room_list.js';
+import Home from './home.js';
+import {
+  HomeOutlined,
+  ShopOutlined,
+  WalletOutlined,
+  LoginOutlined,
+  LogoutOutlined,
+} from '@ant-design/icons';
+import {
+  Router,
+  BrowserRouter,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
 
 const demoURL = "http://localhost:8000/hotelPortal/demo";
+const { Header, Content, Footer } = Layout;
 function App() {
-  const[get, setGet] = useState(null);
+  const [get, setGet] = useState(null);
 
   const onClick = () => {
     axios.get(demoURL).then((response) => {
@@ -16,26 +33,37 @@ function App() {
   };
 
   return (
-    
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Layout className="layout">
+      <Header>
+        <div className="logo" />
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          defaultSelectedKeys={['1']}
+          items={[
+            {key:1, label: (<Link to='/home'>home</Link>), icon:<HomeOutlined/>}, 
+            {key:2, label: (<Link to='/room_list'>room list</Link>), icon: <ShopOutlined/>}, 
+            {key:3, label:'order list', icon:<WalletOutlined/>}, 
+            {key:4, label:'login', icon:<LoginOutlined/>}, 
+            {key:5, label:'register', icon:<LogoutOutlined/>}
+          ]}
+        />
+      </Header>
 
-      <button onClick={onClick}>demo request</button>
-      <div>{get}</div>
-    </div>
+      <Content style={{ padding: '0 50px', }}>
+        <div className="site-layout-content">
+          <button onClick={onClick}>demo request</button>
+          <div>{get}</div>
+        </div>
+        
+        
+      </Content>
+      <Footer
+        style={{ textAlign: 'center' }}
+      >
+        Final Project Team 8
+      </Footer>
+    </Layout>
   );
 }
 
