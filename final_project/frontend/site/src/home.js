@@ -15,6 +15,7 @@ import {
     MailOutlined,
     PhoneOutlined,
     IdcardOutlined,
+    createFromIconfontCN,
 } from '@ant-design/icons';
 import {
     Router,
@@ -26,6 +27,9 @@ import {
 
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
+const IconFont = createFromIconfontCN({
+    scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
+  });
 
 function App() {
     return (
