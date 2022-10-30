@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
 import { Layout, Select, Row, Col, Space, Typography, Divider, PageHeader, Menu, icon } from "antd";
 import Room_list from './Room_list.js';
-import Home from './home.js';
+import Home from './Home.js';
 import {
   HomeOutlined,
   ShopOutlined,
@@ -43,9 +43,9 @@ function App() {
           items={[
             {key:1, label: (<Link to='/home'>home</Link>), icon:<HomeOutlined/>}, 
             {key:2, label: (<Link to='/room_list'>room list</Link>), icon: <ShopOutlined/>}, 
-            {key:3, label:'order list', icon:<WalletOutlined/>}, 
-            {key:4, label:'login', icon:<LoginOutlined/>}, 
-            {key:5, label:'register', icon:<LogoutOutlined/>}
+            {key:3, label: (<Link to='/order_list'>order list</Link>), icon:<WalletOutlined/>}, 
+            {key:4, label: (<Link to='/login'>login</Link>), icon:<LoginOutlined/>}, 
+            {key:5, label: (<Link to='/register'>register</Link>), icon:<LogoutOutlined/>}
           ]}
         />
       </Header>
