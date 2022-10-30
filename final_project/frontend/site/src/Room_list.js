@@ -30,7 +30,7 @@ function App() {
             <Menu
               theme="dark"
               mode="horizontal"
-              defaultSelectedKeys={['1']}
+              defaultSelectedKeys={['2']}
               items={[
                 {key:1, label: (<Link to='/home'>home</Link>), icon:<HomeOutlined/>}, 
                 {key:2, label: (<Link to='/room_list'>room list</Link>), icon: <ShopOutlined/>}, 
