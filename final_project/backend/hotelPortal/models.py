@@ -48,7 +48,7 @@ class Room(models.Model):
     price = models.FloatField(validators=[MinValueValidator(0)],)
 
 class Order(models.Model):
-    roomList = models.ManyToManyField(Room, related_name='roomList')
+    roomList = models.ForeignKey(Room, on_delete=models.PROTECT)
     client = models.ForeignKey(Client, on_delete=models.PROTECT)
     payment = models.ForeignKey(Payment, on_delete=models.PROTECT)
     startTime = models.DateField(null=True, blank=True)
