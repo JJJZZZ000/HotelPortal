@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-8xq$(&i&2wl8kzst0yu#jg8butk&frj%#nbb80zu7@60^)5!)@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'hotelPortal',
 ]
 
 MIDDLEWARE = [
@@ -105,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'US/Eastern'
 
 USE_I18N = True
 
@@ -121,3 +122,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = '/hotelPortal/login'
+
+LOGIN_REDIRECT_URL = '/hotelPortal/'
+MEDIA_ROOT = BASE_DIR / 'images'
+
+
+
+DATETIME_FORMAT = 'n/j/Y g:i A'
+USE_L10N = False
