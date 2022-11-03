@@ -42,11 +42,6 @@ function App({data, setData, list, setList}) {
             }).then((res) => {
                 setData(res.data);
                 setList(res.data);
-
-                setType();
-                setDirection();
-                setOccupancy();
-                setPrice();
             })
     };
 
