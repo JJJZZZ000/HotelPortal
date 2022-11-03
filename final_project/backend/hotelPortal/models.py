@@ -23,16 +23,28 @@ class Payment(models.Model):
     )
 
 class Room(models.Model):
-    class Type(models.TextChoice):
-        Standard = 'Standard',
-        Deluxe = 'Deluxe',
-        Connecting = 'Connecting',
-        Suite = 'Suite',
-    class Direction(models.TextChoices):
-        North = 'North',
-        South = 'South',
-        East = 'East',
-        West = 'West',
+    # class Type(models.TextChoice):
+    #     Standard = 'Standard',
+    #     Deluxe = 'Deluxe',
+    #     Connecting = 'Connecting',
+    #     Suite = 'Suite',
+    # class Direction(models.TextChoices):
+    #     North = 'North',
+    #     South = 'South',
+    #     East = 'East',
+    #     West = 'West',
+    Type = (
+        ('Standard', 'Standard'),
+        ('Deluxe', 'Deluxe'),
+        ('Connecting', 'Connecting'),
+        ('Suite', 'Suite')
+    )
+    Direction= (
+        ('North', 'North'),
+        ('South', 'South'),
+        ('East', 'East'),
+        ('West', 'West')
+    )
     type = models.CharField(
         max_length = 10,
         choices=Type.choices,
