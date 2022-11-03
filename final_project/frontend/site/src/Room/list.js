@@ -64,7 +64,7 @@ function App({data, setData, list, setList}) {
       renderItem={(item) => {
         {console.log(item)}
         return <List.Item
-          actions={[<a href="http://localhost:8000/hotelPortal/cancel_order">cancel order</a>
+          actions={[<a href="http://localhost:8000/hotelPortal/cancel_order">add to shopping cart</a>
         //   , <a key="list-loadmore-more">more</a>
         ]}
         >

@@ -4,6 +4,7 @@ from django.core import serializers
 from django.http import HttpResponse, Http404, HttpResponseForbidden, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.db import models
 
 from hotelPortal.models import Room, Order, Client, Payment
 
@@ -54,17 +55,16 @@ def room_list(request):
         room_direction = request.GET.get('direction', None)
         room_occupancy = request.GET.get('occupancy', None)
         room_price = request.GET.get('price', None)
-        print(room_type)
 
         query_set = Room.objects.all()
         if room_type:
-            query_set.filter(type=room_type)
+            query_set = query_set.filter(type=room_type)
         if room_direction:
-            query_set.filter(direction=room_direction)
+            query_set = query_set.filter(direction=room_direction)
         if room_occupancy:
-            query_set.filter(occupancy=room_occupancy)
+            query_set = query_set.filter(occupancy=room_occupancy)
         if room_price:
-            query_set.filter(price=room_price)
+            query_set = query_set.filter(price=room_price)
         rooms = serializers.serialize("json", query_set)
         response_data = rooms
 
