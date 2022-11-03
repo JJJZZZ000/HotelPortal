@@ -62,9 +62,24 @@ def room_list(request):
         if room_direction:
             query_set = query_set.filter(direction=room_direction)
         if room_occupancy:
-            query_set = query_set.filter(occupancy=room_occupancy)
+            print(room_occupancy)
+            if room_occupancy == 'One':
+                query_set = query_set.filter(occupancy=1)
+            elif room_occupancy == 'Two':
+                query_set = query_set.filter(occupancy=2)
+            elif room_occupancy == 'Three':
+                query_set = query_set.filter(occupancy=3)
+            else:
+                query_set = query_set.filter(occupancy__gt=3)
         if room_price:
-            query_set = query_set.filter(price=room_price)
+            if room_price == '1':
+                query_set = query_set.filter(price__lte=100)
+            elif room_price == '2':
+                query_set = query_set.filter(price__gte=100, price__lte=200)
+            elif room_price == '3':
+                query_set = query_set.filter(price__gte=200, price__lte=300)
+            else:
+                query_set = query_set.filter(price__gte=300)
         rooms = serializers.serialize("json", query_set)
         response_data = rooms
 
