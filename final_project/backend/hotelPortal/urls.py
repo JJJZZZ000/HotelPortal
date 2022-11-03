@@ -11,4 +11,6 @@ urlpatterns =[
 #     path('get-list-xml-template', views.get_list_xml_template),
 
     path('demo', views.demo),
+    path('room_list', views.room_list),
+    path('add_room', views.add_room),
 ]
