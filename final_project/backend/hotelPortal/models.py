@@ -26,29 +26,27 @@ class Payment(models.Model):
 
 
 class Room(models.Model):
-    class Type(models.TextChoices):
-        Standard = 'Standard',
-        Deluxe = 'Deluxe',
-        Connecting = 'Connecting',
-        Suite = 'Suite',
-
-    class Direction(models.TextChoices):
-        North = 'North',
-        South = 'South',
-        East = 'East',
-        West = 'West',
-
+    Type = (
+        ('Standard', 'Standard'),
+        ('Deluxe', 'Deluxe'),
+        ('Connecting', 'Connecting'),
+        ('Suite', 'Suite')
+    )
+    Direction= (
+        ('North', 'North'),
+        ('South', 'South'),
+        ('East', 'East'),
+        ('West', 'West')
+    )
     type = models.CharField(
         max_length=10,
-        choices=Type.choices,
-        default=Type.Standard,
+        choices=Type
     )
     occupancy = models.PositiveIntegerField(validators=[MinValueValidator(1)])
     roomNum = models.CharField(max_length=5)
     direction = models.CharField(
         max_length=12,
-        choices=Direction.choices,
-        default='All'
+        choices=Direction
     )
     price = models.FloatField(validators=[MinValueValidator(0)], )
 
