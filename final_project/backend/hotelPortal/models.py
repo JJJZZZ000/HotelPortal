@@ -12,16 +12,21 @@ class Client(models.Model):
 
 
 class Payment(models.Model):
-    class Status(models.TextChoices):
-        Unpaid = 'Unpaid'
-        Paid = 'Paid'
-        Canceled = 'Canceled'
+    Unpaid = 'Unpaid'
+    Paid = 'Paid'
+    Canceled = 'Canceled'
+
+    STATUS_CHOICES = [
+        (Unpaid, 'Unpaid'),
+        (Paid, 'Paid'),
+        (Canceled, 'Canceled'),
+    ]
 
     price = models.FloatField(validators=[MinValueValidator(0)], )
     status = models.CharField(
         max_length=8,
-        choices=Status.choices,
-        default=Status.Unpaid,
+        choices=STATUS_CHOICES,
+        default=Unpaid,
     )
 
 
@@ -55,6 +60,7 @@ class Room(models.Model):
         choices=TYPE_CHOICES,
         default=Standard,
     )
+
     occupancy = models.PositiveIntegerField(validators=[MinValueValidator(1)])
     roomNum = models.CharField(max_length=5)
     direction = models.CharField(
