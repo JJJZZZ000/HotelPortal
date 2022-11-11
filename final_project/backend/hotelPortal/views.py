@@ -5,6 +5,11 @@ from django.http import HttpResponse, Http404, HttpResponseForbidden, JsonRespon
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.db import models
+from django.db.models import Q
+
+from django.utils import timezone
+import datetime
+from datetime import timedelta
 
 from hotelPortal.models import Room, Order, Client, Payment
 
@@ -55,6 +60,11 @@ def room_list(request):
         room_direction = request.GET.get('direction', None)
         room_occupancy = request.GET.get('occupancy', None)
         room_price = request.GET.get('price', None)
+        start_time = request.GET.get('startTime', None)
+        end_time = request.GET.get('endTime', None)
+
+        print(start_time, end_time, datetime.datetime.now())
+        # process with the time format.
 
         query_set = Room.objects.all()
         if room_type:
@@ -62,7 +72,6 @@ def room_list(request):
         if room_direction:
             query_set = query_set.filter(direction=room_direction)
         if room_occupancy:
-            print(room_occupancy)
             if room_occupancy == 'One':
                 query_set = query_set.filter(occupancy=1)
             elif room_occupancy == 'Two':
@@ -80,6 +89,20 @@ def room_list(request):
                 query_set = query_set.filter(price__gte=200, price__lte=300)
             else:
                 query_set = query_set.filter(price__gte=300)
+        if start_time is None:
+            now = datetime.datetime.now()
+            start_time = now
+            end_time = now + timedelta(days=1)
+        # else:
+            # process with the startTime format.
+
+        # get all orders which have a crash with the target time period.
+        orders = Order.objects.exclude(Q(startTime__gte=end_time) & Q(endTime__gte=start_time)).all()
+        room_ids = []
+        for order in orders:
+            room_ids.append(order.room.roomNum)
+        room_ids = list(set(room_ids))
+        query_set = query_set.exclude(roomNum__in=room_ids)
         rooms = serializers.serialize("json", query_set)
         response_data = rooms
 
@@ -92,10 +115,23 @@ def room_list(request):
     return response
 
 
+# deprecated
+def room_detail(request, id):
+    response_data = []
+    if request.method == 'GET':
+        room = serializers.serialize("json", Room.objects.filter(id=id).all())
+        response_data = room
+
+    response = HttpResponse(response_data, content_type='application/json')
+    response['Access-Control-Allow-Origin'] = '*'
+
+    return response
+
+
 def add_room(request):
     response_data = []
-    room1 = Room(type=Room.Type.Standard, occupancy=2, roomNum='A101', direction=Room.Direction.East, price=200)
-    room2 = Room(type=Room.Type.Deluxe, occupancy=3, roomNum='A102', direction=Room.Direction.West, price=500)
+    room1 = Room(type=Room.Standard, occupancy=2, roomNum='A101', direction=Room.East, price=200)
+    room2 = Room(type=Room.Deluxe, occupancy=3, roomNum='A102', direction=Room.West, price=500)
     room1.save()
     room2.save()
 
