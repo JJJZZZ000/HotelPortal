@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
 import { Layout, Select, Row, Col, Space, Typography, Divider, PageHeader, Menu, icon, Pagination, Button } from "antd";
 import Room_list from './Room_list.js';
-import Home from './Home.js';
+import Home from './home.js';
 import List from '../src/Room/list';
 import SelectComponent from '../src/Room/select'
 import ShoppingCart from '../src/Room/shopping_cart'
@@ -64,7 +64,7 @@ const [rooms, setRooms] = useState([]);
         <Row>
           <Col span={16}>
             <Divider type="horizontal" />
-            <List data={data} setData={setData} list={list} setList={setList} rooms={rooms} setRooms={setRooms}/>
+            <List data={data} setData={setData} list={list} setList={setList} rooms={rooms} setRooms={setRooms} />
           </Col>
           <Col span={8}>
             <Divider type="horizontal" />

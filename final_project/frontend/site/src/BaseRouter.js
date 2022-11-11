@@ -1,6 +1,6 @@
 import React from 'react';
 import {HashRouter, Route, Routes} from 'react-router-dom';
-import Home from './Home.js';
+import Home from './home.js';
 import App from './App';
 import Room_list from './Room_list.js';
 import Order_list from './Order_list.js';
