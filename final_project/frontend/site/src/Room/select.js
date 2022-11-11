@@ -1,7 +1,9 @@
-import { Select, Typography, Divider, Button } from 'antd';
+import { Select, Typography, Divider, Button, Row, Col } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios, { Axios } from "axios";
+import TimePicker from './time_picker';
+import moment from 'moment';
 
 const { Text, Link, Title } = Typography;
 
@@ -10,6 +12,8 @@ function App({data, setData, list, setList}) {
     const [direction, setDirection] = useState("");
     const [occupancy, setOccupancy] = useState("");
     const [price, setPrice] = useState("");
+    const [startTime, setStartTime] = useState();
+    const [endTime, setEndTime] = useState();
 
     const handleTypeChange = (value) => {
         setType(value);
@@ -30,7 +34,6 @@ function App({data, setData, list, setList}) {
     const room_list_URL = "http://localhost:8000/hotelPortal/room_list";
     
     const onClick = () => {
-        console.log(type, direction, occupancy, price);
         axios.get(room_list_URL, 
             {
                 params: {
@@ -38,6 +41,8 @@ function App({data, setData, list, setList}) {
                     direction: direction,
                     occupancy: occupancy,
                     price: price,
+                    startTime: startTime,
+                    endTime: endTime,
                 }
             }).then((res) => {
                 setData(res.data);
@@ -45,15 +50,35 @@ function App({data, setData, list, setList}) {
             })
     };
 
+    const onTypeClear = () => {
+        setType();
+    }
+
+    const onDirectionClear = () => {
+        setDirection();
+    }
+
+    const onOccupancyClear = () => {
+        setOccupancy();
+    }
+
+    const onPriceClear = () => {
+        setPrice();
+    }
+
     return (
         <>
+        <Row>
+            <Col>
             <Text>Room Type:</Text>
             <Select
+                allowClear
                 defaultValue=""
                 style={{
-                    width: 140,
+                    width: 70,
                 }}
                 onChange={handleTypeChange}
+                onClear={onTypeClear}
                 options={[
                     {
                         value: 'Standard',
@@ -73,14 +98,18 @@ function App({data, setData, list, setList}) {
                     },
                 ]}
             />
+            </Col>
+            <Col>
             <Divider type="vertical" />
             <Text>Direction:</Text>
             <Select
+                allowClear
                 defaultValue=""
                 style={{
-                    width: 140,
+                    width: 70,
                 }}
                 onChange={handleDirectionChange}
+                onClear={onDirectionClear}
                 options={[
                     {
                         value: 'North',
@@ -100,14 +129,18 @@ function App({data, setData, list, setList}) {
                     },
                 ]}
             />
+            </Col>
+            <Col>
             <Divider type="vertical" />
             <Text>Occupancy:</Text>
             <Select
+                allowClear
                 defaultValue=""
                 style={{
-                    width: 140,
+                    width: 70,
                 }}
                 onChange={handleOccupancyChange}
+                onClear={onOccupancyClear}
                 options={[
                     {
                         value: 'One',
@@ -127,14 +160,18 @@ function App({data, setData, list, setList}) {
                     },
                 ]}
             />
+            </Col>
+            <Col>
             <Divider type="vertical" />
             <Text>price:</Text>
             <Select
+                allowClear
                 defaultValue=""
                 style={{
-                    width: 140,
+                    width: 70,
                 }}
                 onChange={handlePriceChange}
+                onClear={onPriceClear}
                 options={[
                     {
                         value: '1',
@@ -154,8 +191,16 @@ function App({data, setData, list, setList}) {
                     },
                 ]}
             />
+            </Col>
+            <Col>
+            <Divider type="vertical" />
+            <TimePicker startTime={startTime} setStartTime={setStartTime} endTime={endTime} setEndTime={setEndTime} />
+            </Col>
+            <Col>
             <Divider type="vertical" />
             <Button type="primary" shape="circle" icon={<SearchOutlined />} onClick={onClick} />
+            </Col>
+            </Row>
         </>
     );
 }
