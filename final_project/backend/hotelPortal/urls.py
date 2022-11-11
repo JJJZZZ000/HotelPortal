@@ -13,4 +13,5 @@ urlpatterns =[
     path('demo', views.demo),
     path('room_list', views.room_list),
     path('add_room', views.add_room),
+    path('room_detail/<int:id>', views.room_detail),
 ]

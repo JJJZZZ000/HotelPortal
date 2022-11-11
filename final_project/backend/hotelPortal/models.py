@@ -72,7 +72,7 @@ class Room(models.Model):
 
 
 class Order(models.Model):
-    roomList = models.ForeignKey(Room, on_delete=models.PROTECT)
+    room = models.ForeignKey(Room, on_delete=models.PROTECT)
     client = models.ForeignKey(Client, on_delete=models.PROTECT)
     payment = models.ForeignKey(Payment, on_delete=models.PROTECT)
     startTime = models.DateField(null=True, blank=True)
