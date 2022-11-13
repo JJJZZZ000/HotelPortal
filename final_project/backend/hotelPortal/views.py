@@ -71,15 +71,15 @@ def order_list(request):
         order_endTime = request.GET.get('endTime', None)
         query_set = Order.objects.all()
         if order_room:
-            query_set = query_set.filter(Room__roomNum=order_room)
+            query_set = query_set.filter(room__roomNum=order_room)
         if order_paymentStatus:
-            query_set = query_set.filter(Payment__status=order_paymentStatus)
+            query_set = query_set.filter(payment__status=order_paymentStatus)
         if order_startTime:
             start_date = parse_date(order_startTime)
             end_date = parse_date(order_endTime)
             query_set = query_set.filter(startTime__gte=start_date, endTime__lte=end_date)
         if order_paymentStatus:
-            query_set = query_set.filter(Payment__status=order_paymentStatus)
+            query_set = query_set.filter(payment__status=order_paymentStatus)
         resp_data = []
         pk = 1
         for order in query_set.iterator():
