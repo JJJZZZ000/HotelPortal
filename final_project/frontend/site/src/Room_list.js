@@ -2,11 +2,14 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
-import { Layout, Select, Row, Col, Space, Typography, Divider, PageHeader, Menu, icon, Pagination } from "antd";
+import qs from "qs"
+import { Layout, Select, Row, Col, Space, Typography, Divider, PageHeader, Menu, icon, Pagination, Button } from "antd";
 import Room_list from './Room_list.js';
 import Home from './home.js';
 import List from '../src/Room/list';
 import SelectComponent from '../src/Room/select'
+import ShoppingCart from '../src/Room/shopping_cart'
+import moment from 'moment';
 import {
   HomeOutlined,
   ShopOutlined,
@@ -23,10 +26,38 @@ import {
 } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout;
+const { Text, Title } = Typography;
+const checkout_URL = "http://localhost:8000/hotelPortal/create-checkout-session";
 
 function App() {
   const [data, setData] = useState([]);
   const [list, setList] = useState([]);
+
+  const [rooms, setRooms] = useState([]);
+
+  const [startTime, setStartTime] = useState();
+  const [endTime, setEndTime] = useState();
+
+  const onClick = () => {
+    // window.location.href = checkout_URL
+    axios.post(checkout_URL, {
+      data: {
+        rooms: rooms,
+        startTime: startTime === undefined ? moment().format('YYYY-MM-DD').valueOf() : startTime,
+        endTime: endTime === undefined ? moment().add(1, "days").format('YYYY-MM-DD').valueOf() : endTime,
+      }
+    }, {
+      withCredentials: true,
+      headers: {
+        'X-CSRFToken': window.sessionStorage.getItem('CSRF-Token')
+      }
+    }).then((res) => {
+      // deal with the response.
+      console.log(res)
+      console.log(res.data)
+      window.location.href = res.data;
+    })
+  }
 
   return (
     <Layout className="layout">
@@ -47,15 +78,36 @@ function App() {
       </Header>
 
       <Content style={{ padding: '0 50px', }}>
+        <Row >
+          <Col span={16}>
+            <Divider type="horizontal" />
+            <SelectComponent data={data} setData={setData} list={list} setList={setList} startTime={startTime} endTime={endTime} setStartTime={setStartTime} setEndTime={setEndTime}/>
+          </Col>
+          <Col span={8} align='middle'>
+            <Divider type="horizontal" />
+            <Text>Shopping Cart</Text>
+          </Col>
+        </Row>
         <Row>
           <Col span={16}>
             <Divider type="horizontal" />
-            <SelectComponent data={data} setData ={setData} list={list} setList={setList}/>
-            <Divider type="horizontal" />
-            <List data={data} setData={setData} list={list} setList={setList}/>
+            <List data={data} setData={setData} list={list} setList={setList} rooms={rooms} setRooms={setRooms} />
           </Col>
-
           <Col span={8}>
+            <Divider type="horizontal" />
+            <ShoppingCart rooms={rooms} setRooms={setRooms} />
+            <Divider type="horizontal" >
+              {/* <form 
+                action='http://localhost:8000/hotelPortal/create-checkout-session' 
+                method='POST'
+                onSubmit={onClick}
+                headers={{'X-CSRFToken': window.sessionStorage.getItem('CSRF-Token')}}
+                withCredentials={true}
+                > */}
+                {/* <button type='submit'>Checkout Your Order!</button> */}
+              {/* </form> */}
+              <Button type="primary" onClick={onClick}>Checkout Your Order!</Button>
+            </Divider>
 
           </Col>
         </Row>
