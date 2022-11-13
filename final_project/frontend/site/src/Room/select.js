@@ -7,13 +7,13 @@ import moment from 'moment';
 
 const { Text, Link, Title } = Typography;
 
-function App({data, setData, list, setList}) {
+function App({data, setData, list, setList, startTime, endTime, setStartTime, setEndTime}) {
     const [type, setType] = useState("");
     const [direction, setDirection] = useState("");
     const [occupancy, setOccupancy] = useState("");
     const [price, setPrice] = useState("");
-    const [startTime, setStartTime] = useState();
-    const [endTime, setEndTime] = useState();
+    // const [startTime, setStartTime] = useState();
+    // const [endTime, setEndTime] = useState();
 
     const handleTypeChange = (value) => {
         setType(value);

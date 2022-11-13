@@ -122,14 +122,14 @@ function App({ data, setData, list, setList, rooms, setRooms }) {
                 loadMore={loadMore}
                 dataSource={list}
                 renderItem={(item, index) => {
-                    return <Popover content={content(item)} trigger="click">
-                        <List.Item
-                            actions={[<a onClick={() => { onClick(item, index) }}>{isAddOrder[index] ? 'add to shopping cart' : 'cancel'} </a>
-                                //   , <a key="list-loadmore-more">more</a>
-                            ]}
-                        // onClick={() => { onClickListItem(item) }}
-                        >
-                            <Skeleton avatar title={false} loading={item.loading} active>
+                    return <List.Item
+                        actions={[<a onClick={() => { onClick(item, index) }}>{isAddOrder[index] ? 'add to shopping cart' : 'cancel'} </a>
+                            //   , <a key="list-loadmore-more">more</a>
+                        ]}
+                    // onClick={() => { onClickListItem(item) }}
+                    >
+                        <Skeleton avatar title={false} loading={item.loading} active>
+                            <Popover content={content(item)} trigger="click">
                                 <List.Item.Meta
                                     avatar={<Avatar src={`https://randomuser.me/api/portraits/med/women/67.jpg`} />}
                                     title={<a href="https://ant.design">{item.fields?.roomNum}</a>}
@@ -140,9 +140,9 @@ function App({ data, setData, list, setList, rooms, setRooms }) {
                                         'Price: ' + item.fields?.price
                                     }
                                 />
-                            </Skeleton>
-                        </List.Item>
-                    </Popover>
+                            </Popover>
+                        </Skeleton>
+                    </List.Item>
                 }}
             />
         </>
