@@ -1,13 +1,16 @@
+from random import randint
+
 from django.shortcuts import render, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.core import serializers
 from django.http import HttpResponse, Http404, HttpResponseForbidden, JsonResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+# from django.utils.datetime_safe import datetime
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.db.models import Q
 from django.db import models, transaction, IntegrityError, OperationalError
 from django.contrib.auth.models import User
-
+from django.utils.dateparse import parse_date
 import os
 from flask import Flask, redirect, request
 
@@ -16,7 +19,6 @@ import stripe
 from django.utils import timezone
 import datetime
 from datetime import timedelta
-
 from hotelPortal.models import Room, Order, Client, Payment
 
 import json
@@ -58,6 +60,53 @@ def demo(request):
     response['Access-Control-Allow-Origin'] = '*'
 
     return response
+
+
+def order_list(request):
+    response_data = []
+    if request.method == 'GET':
+        order_room = request.GET.get('room', None)
+        order_paymentStatus = request.GET.get('paymentStatus', None)
+        order_startTime = request.GET.get('startTime', None)
+        order_endTime = request.GET.get('endTime', None)
+        query_set = Order.objects.all()
+        if order_room:
+            query_set = query_set.filter(room__roomNum=order_room)
+        if order_paymentStatus:
+            query_set = query_set.filter(payment__status=order_paymentStatus)
+        if order_startTime:
+            start_date = parse_date(order_startTime)
+            end_date = parse_date(order_endTime)
+            query_set = query_set.filter(startTime__gte=start_date, endTime__lte=end_date)
+        if order_paymentStatus:
+            query_set = query_set.filter(payment__status=order_paymentStatus)
+        resp_data = []
+        pk = 1
+        for order in query_set.iterator():
+            data = {}
+            data['model'] = 'hotelPortal.room'
+            data['pk'] = pk
+            pk = pk+1
+            fields = {}
+            fields['room'] = order.room.roomNum
+            fields['paymentStatus'] = order.payment.status
+            fields['paymentPrice'] = order.payment.price
+            fields['startTime'] = order.startTime.strftime("%Y-%m-%d")
+            fields['endTime'] = order.endTime.strftime("%Y-%m-%d")
+            data['fields'] = fields
+            resp_data.append(data)
+        # orders = serializers.serialize("json", resp_data)
+        orders = json.dumps(resp_data)
+        response_data = orders
+    response = HttpResponse(response_data, content_type='application/json')
+    # response = JsonResponse(list(response_data), safe=False)
+    response['Access-Control-Allow-Origin'] = '*'
+
+    return response
+
+
+def cancel_order(request):
+    return
 
 
 def room_list(request):
@@ -112,6 +161,8 @@ def room_list(request):
         query_set = query_set.exclude(roomNum__in=room_ids)
         rooms = serializers.serialize("json", query_set)
         response_data = rooms
+        print(type(rooms))
+        print(rooms)
 
     # response_json = json.dumps(response_data)
 
@@ -238,6 +289,29 @@ def add_room(request):
     response = HttpResponse(response_json, content_type='application/json')
     response['Access-Control-Allow-Origin'] = '*'
 
+    return response
+
+
+def add_order(request):
+    add_room(request)
+    response_data = []
+    room1 = Room.objects.all()[0]
+    payment1 = Payment(price=100.00, status=Payment.Unpaid)
+    payment1.save()
+    user = User.objects.create_user(username=str(randint(1, 10000)),
+                                    email='deyneeraj666.com',
+                                    password='glass onion')
+    user.save()
+    client1 = Client(user=user, tele="123", age=10)
+    client1.save()
+    startTime = datetime.datetime.now()
+    endTime = datetime.datetime.now()
+    order1 = Order(room=room1, client=client1, payment=payment1, startTime=startTime, endTime=endTime)
+    order1.save()
+    response_json = json.dumps(response_data)
+    response = HttpResponse(response_json, content_type='application/json')
+    response['Access-Control-Allow-Origin'] = '*'
+    print()
     return response
 
 
