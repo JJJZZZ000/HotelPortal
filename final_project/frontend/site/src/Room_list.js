@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
 import { Layout, Select, Row, Col, Space, Typography, Divider, PageHeader, Menu, icon, Pagination } from "antd";
 import Room_list from './Room_list.js';
-import Home from './Home.js';
+import Home from './home.js';
 import List from '../src/Room/list';
 import SelectComponent from '../src/Room/select'
 import {

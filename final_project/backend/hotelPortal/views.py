@@ -1,11 +1,14 @@
+from random import randint
+
 from django.shortcuts import render, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.core import serializers
 from django.http import HttpResponse, Http404, HttpResponseForbidden, JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.utils.datetime_safe import datetime
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.db import models
-
+from django.contrib.auth.models import User
 from hotelPortal.models import Room, Order, Client, Payment
 
 import json
@@ -46,6 +49,29 @@ def demo(request):
     response['Access-Control-Allow-Origin'] = '*'
 
     return response
+
+def order_list(request):
+    response_data = []
+    if request.method == 'GET':
+        order_room = request.GET.get('room', None)
+        order_paymentStatus = request.GET.get('paymentStatus', None)
+        order_startTime = request.GET.get('startTime', None)
+        order_endTime = request.GET.get('endTime', None)
+        query_set = Order.objects.all()
+        # if order_room:
+        orders = serializers.serialize("json", query_set)
+        response_data = orders
+
+        print(order_startTime)
+
+    # response_json = json.dumps(response_data)
+    response = HttpResponse(response_data, content_type='application/json')
+    # response = JsonResponse(list(response_data), safe=False)
+    response['Access-Control-Allow-Origin'] = '*'
+
+    return response
+def cancel_order(request):
+    return
 
 
 def room_list(request):
@@ -94,8 +120,8 @@ def room_list(request):
 
 def add_room(request):
     response_data = []
-    room1 = Room(type=Room.Type.Standard, occupancy=2, roomNum='A101', direction=Room.Direction.East, price=200)
-    room2 = Room(type=Room.Type.Deluxe, occupancy=3, roomNum='A102', direction=Room.Direction.West, price=500)
+    room1 = Room(type=Room.Standard, occupancy=2, roomNum='A101', direction=Room.East, price=200)
+    room2 = Room(type=Room.Deluxe, occupancy=3, roomNum='A102', direction=Room.West, price=500)
     room1.save()
     room2.save()
 
@@ -105,3 +131,26 @@ def add_room(request):
     response['Access-Control-Allow-Origin'] = '*'
 
     return response
+
+def add_order(request):
+    add_room(request)
+    response_data = []
+    room1 = Room.objects.all()[0]
+    payment1 = Payment(price=100.00, status=Payment.Unpaid)
+    payment1.save()
+    user = User.objects.create_user(username=str(randint(1,10000)),
+                                    email='deyneeraj666.com',
+                                    password='glass onion')
+    user.save()
+    client1 = Client(user=user, tele="123", age=10)
+    client1.save()
+    startTime = datetime.now()
+    endTime = datetime.now()
+    order1 = Order(room=room1, client=client1, payment=payment1, startTime=startTime, endTime=endTime)
+    order1.save()
+    response_json = json.dumps(response_data)
+    response = HttpResponse(response_json, content_type='application/json')
+    response['Access-Control-Allow-Origin'] = '*'
+    print()
+    return response
+

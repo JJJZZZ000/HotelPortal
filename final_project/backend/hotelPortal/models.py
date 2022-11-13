@@ -6,7 +6,7 @@ from django.db import models
 
 class Client(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
-    age = models.PositiveIntegerField()
+    age = models.PositiveIntegerField(null=True, blank=True)
     gender = models.CharField(null=True, blank=True, max_length=10)
     tele = models.CharField(max_length=20)
 
@@ -72,7 +72,7 @@ class Room(models.Model):
 
 
 class Order(models.Model):
-    roomList = models.ForeignKey(Room, on_delete=models.PROTECT)
+    room = models.ForeignKey(Room, on_delete=models.PROTECT)
     client = models.ForeignKey(Client, on_delete=models.PROTECT)
     payment = models.ForeignKey(Payment, on_delete=models.PROTECT)
     startTime = models.DateField(null=True, blank=True)

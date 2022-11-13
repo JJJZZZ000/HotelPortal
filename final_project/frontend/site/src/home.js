@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
 import { Layout, Select, Row, Col, Space, Divider, PageHeader, Menu, icon, Typography } from "antd";
 import Room_list from './Room_list.js';
-import Home from './Home.js';
+import Home from './home.js';
 import Carousel from './Carousel';
 import {
     HomeOutlined,

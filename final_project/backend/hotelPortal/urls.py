@@ -13,4 +13,7 @@ urlpatterns =[
     path('demo', views.demo),
     path('room_list', views.room_list),
     path('add_room', views.add_room),
+    path('order_list', views.order_list),
+    path('cancel_order', views.cancel_order),
+    path('add_order', views.add_order),
 ]
