@@ -194,6 +194,7 @@ def checkout(request):
         rooms = data['rooms']
         start_time = data['startTime']
         end_time = data['endTime']
+        total_day = data['totalDay']
         print(rooms, start_time, end_time)
 
         with transaction.atomic():
@@ -201,7 +202,7 @@ def checkout(request):
             # 1.add payment.
             total_price = 0
             for room in rooms:
-                total_price += room['price']
+                total_price += room['price'] * total_day
             payment = Payment(price=total_price, status=Payment.Unpaid)
             payment.save()
 
