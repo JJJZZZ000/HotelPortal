@@ -45,6 +45,7 @@ function App() {
         rooms: rooms,
         startTime: startTime === undefined ? moment().format('YYYY-MM-DD').valueOf() : startTime,
         endTime: endTime === undefined ? moment().add(1, "days").format('YYYY-MM-DD').valueOf() : endTime,
+        totalDay: endTime === undefined ? 1 : moment(endTime).diff(moment(startTime), 'days'),
       }
     }, {
       withCredentials: true,
@@ -53,8 +54,6 @@ function App() {
       }
     }).then((res) => {
       // deal with the response.
-      console.log(res)
-      console.log(res.data)
       window.location.href = res.data;
     })
   }
