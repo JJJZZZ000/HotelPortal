@@ -12,8 +12,9 @@ function App({startTime, setStartTime, endTime, setEndTime}) {
             setStartTime(moment(value[0]).format('YYYY-MM-DD').valueOf())
             setEndTime(moment(value[1]).format('YYYY-MM-DD').valueOf())
         } else {
-            setStartTime(moment().format('YYYY-MM-DD').valueOf())
-            setEndTime(moment().add(1, "days").format('YYYY-MM-DD').valueOf())
+            
+            setStartTime(moment().subtract(5, "hours").format('YYYY-MM-DD').valueOf())
+            setEndTime(moment().subtract(5, "hours").add(1, "days").format('YYYY-MM-DD').valueOf())
         }
     }
 
