@@ -35,7 +35,6 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(moment().format('YYYY-MM-DD').valueOf())
     axios.get(csrf_token_URL)
       .then(res => {
         window.sessionStorage.setItem('CSRF-Token', getCookie('csrftoken'));
