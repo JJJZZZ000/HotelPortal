@@ -96,7 +96,7 @@ function App({ data, setData, list, setList, rooms, setRooms }) {
                     style={{ width: 240 }}
                     cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
                 >
-                    <Meta title={"Room Detail For " + item.fields.roomNum} description="www.instagram.com" />
+                    <Meta title={"Room Detail For " + item.fields.roomNum} description="www.hotelportal_team8.com" />
                 </Card>
                 <Descriptions
                     title="Specific"
@@ -106,8 +106,8 @@ function App({ data, setData, list, setList, rooms, setRooms }) {
                     <Descriptions.Item label="Room Number">{item.fields.roomNum}</Descriptions.Item>
                     <Descriptions.Item label="Type">{item.fields.type}</Descriptions.Item>
                     <Descriptions.Item label="Direction">{item.fields.direction}</Descriptions.Item>
-                    <Descriptions.Item label="Occupancy">{item.fields.occupancy}</Descriptions.Item>
-                    <Descriptions.Item label="Price">{item.fields.price}</Descriptions.Item>
+                    <Descriptions.Item label="Occupancy">{item.fields.occupancy + ' people'}</Descriptions.Item>
+                    <Descriptions.Item label="Price">{item.fields.price + '$'}</Descriptions.Item>
                 </Descriptions>
             </>
         );
@@ -132,7 +132,7 @@ function App({ data, setData, list, setList, rooms, setRooms }) {
                             <Popover content={content(item)} trigger="click">
                                 <List.Item.Meta
                                     avatar={<Avatar src={`https://randomuser.me/api/portraits/med/women/67.jpg`} />}
-                                    title={<a href="https://ant.design">{item.fields?.roomNum}</a>}
+                                    title={<a>{item.fields?.roomNum}</a>}
                                     description={
                                         'Type: ' + item.fields?.type + ' ' +
                                         'Occupancy: ' + item.fields?.occupancy + ' ' +
