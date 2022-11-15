@@ -64,9 +64,9 @@ function App({data, setData, list, setList}) {
       renderItem={(item) => {
         // {console.log(item)}
         return <List.Item
-          actions={[<a href="http://localhost:8000/hotelPortal/cancel_order">cancel_order</a>
-        //   , <a key="list-loadmore-more">more</a>
-        ]}
+        //   actions={[<a href="http://localhost:8000/hotelPortal/cancel_order">cancel_order</a>
+        // //   , <a key="list-loadmore-more">more</a>
+        // ]}
         >
           <Skeleton avatar title={false} loading={item.loading} active>
             <List.Item.Meta
@@ -75,7 +75,7 @@ function App({data, setData, list, setList}) {
               description={
                   'Room: '+ item.fields?.room+' '+
                   'PaymentStatus: ' + item.fields?.paymentStatus+' '+
-                  'Price": '+item.fields?.paymentPrice+' '+
+                  'Price: '+item.fields?.paymentPrice+' '+
                   'StartTime: ' + item.fields?.startTime+' '+
                   'EndTime: '+item.fields?.endTime+' '
             }

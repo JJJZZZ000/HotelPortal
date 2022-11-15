@@ -5,6 +5,7 @@ import axios, { Axios } from "axios";
 import { Layout, Select, Row, Col, Space, Typography, Divider, PageHeader, Menu, icon } from "antd";
 import Room_list from './Room_list.js';
 import Home from './home.js';
+import moment from 'moment'
 import {
   HomeOutlined,
   ShopOutlined,
@@ -34,6 +35,7 @@ function App() {
   };
 
   useEffect(() => {
+    console.log(moment().format('YYYY-MM-DD').valueOf())
     axios.get(csrf_token_URL)
       .then(res => {
         window.sessionStorage.setItem('CSRF-Token', getCookie('csrftoken'));
