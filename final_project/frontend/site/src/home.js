@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
-import { Layout, Select, Row, Col, Space, Divider, PageHeader, Menu, icon, Typography } from "antd";
+import { Layout, Select, Row, Col, Space, Divider, PageHeader, Menu, icon, Typography, Avatar } from "antd";
 import Room_list from './Room_list.js';
 
 import Home from './home.js';
@@ -28,10 +28,10 @@ import {
 } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout;
-const { Title } = Typography;
+const { Title, Paragraph, Text } = Typography;
 const IconFont = createFromIconfontCN({
     scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
-  });
+});
 
 function App() {
     return (
@@ -55,24 +55,42 @@ function App() {
             <Content style={{ padding: '0 50px', }}>
 
                 <Space direction="vertical" size="large" style={{ display: 'flex' }}>
-                    <Divider orientation="left" style={{ fontSize: 30 }}>About Us</Divider>
+                    <Divider></Divider>
                     {/* <Title>About Us</Title> */}
-                    <p>text</p>
+                    <Typography>
+                        <Title>About Us</Title>
+                        <Paragraph>
+                            In the process of internal desktop applications development, many different design specs and
+                            implementations would be involved, which might cause designers and developers difficulties and
+                            duplication and reduce the efficiency of development.
+                        </Paragraph>
+                        <Paragraph>
+                            After massive project practice and summaries, Ant Design, a design language for background
+                            applications, is refined by Ant UED Team, which aims to{' '}
+                            <Text strong>
+                                uniform the user interface specs for internal background projects, lower the unnecessary
+                                cost of design differences and implementation and liberate the resources of design and
+                                front-end development
+                            </Text>
+                        </Paragraph>
+                    </Typography>
                     <Divider dashed style={{ backgroundColor: "black" }}></Divider>
                     <Carousel />
-                    <Divider orientation="left" style={{ fontSize: 30 }}>Contact Us</Divider>
+                    <Typography>
+                        <Title>Contact Us</Title>
+                    </Typography>
                 </Space>
 
             </Content>
             <Footer
                 style={{ textAlign: 'center' }}
             >
-                <div style={{ color: "black"}}>
+                <div style={{ color: "black" }}>
                     {/* <Title style={{ color: "black" }}>Contact Us</Title> */}
                     <Row justify="center" align="top">
-                        <Col span={8}><h3>Jiaqi Liu</h3></Col>
-                        <Col span={8}><h3>Jie Zhu</h3></Col>
-                        <Col span={8}><h3>Haorong Zhu</h3></Col>
+                        <Col span={8}><Avatar src="/1.jpg" /> <Text>Liu Jiaqi</Text></Col>
+                        <Col span={8}><Avatar src="/2.JPG" /> <Text>Jie Zhu</Text></Col>
+                        <Col span={8}><Avatar src="/3.jpeg" /> <Text>Haorong Zhu</Text></Col>
                     </Row>
                     <Row>
                         <Col span={8}><MailOutlined /> jiaqili3@andrew.cmu.edu</Col>
