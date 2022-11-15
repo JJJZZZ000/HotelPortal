@@ -6,10 +6,10 @@ const count = 3;
 const room_list_URL = `http://localhost:8000/hotelPortal/room_list`;
 const { Meta } = Card;
 
-function App({ data, setData, list, setList, rooms, setRooms }) {
+function App({ data, setData, list, setList, rooms, setRooms, isAddOrder, setIsAddOrder }) {
     const [initLoading, setInitLoading] = useState(true);
     const [loading, setLoading] = useState(false);
-    const [isAddOrder, setIsAddOrder] = useState([]);
+    // const [isAddOrder, setIsAddOrder] = useState([]);
     //   const [data, setData] = useState([]);
     //   const [list, setList] = useState([]);
     useEffect(() => {

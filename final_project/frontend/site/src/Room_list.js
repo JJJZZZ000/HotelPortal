@@ -38,6 +38,8 @@ function App() {
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
 
+  const [isAddOrder, setIsAddOrder] = useState([]);
+
   const onClick = () => {
     // window.location.href = checkout_URL
     axios.post(checkout_URL, {
@@ -54,7 +56,9 @@ function App() {
       }
     }).then((res) => {
       // deal with the response.
+      setIsAddOrder([])
       window.location.href = res.data;
+
     })
   }
 
@@ -90,7 +94,7 @@ function App() {
         <Row>
           <Col span={16}>
             <Divider type="horizontal" />
-            <List data={data} setData={setData} list={list} setList={setList} rooms={rooms} setRooms={setRooms} />
+            <List data={data} setData={setData} list={list} setList={setList} rooms={rooms} setRooms={setRooms} isAddOrder={isAddOrder} setIsAddOrder={setIsAddOrder} />
           </Col>
           <Col span={8}>
             <Divider type="horizontal" />

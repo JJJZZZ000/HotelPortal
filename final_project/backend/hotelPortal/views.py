@@ -282,8 +282,12 @@ def add_room(request):
     response_data = []
     room1 = Room(type=Room.Standard, occupancy=2, roomNum='A101', direction=Room.East, price=200)
     room2 = Room(type=Room.Deluxe, occupancy=3, roomNum='A102', direction=Room.West, price=500)
+    room3 = Room(type=Room.Suite, occupancy=4, roomNum='A103', direction=Room.North, price=700)
+    room4 = Room(type=Room.Connecting, occupancy=5, roomNum='A104', direction=Room.South, price=100)
     room1.save()
     room2.save()
+    room3.save()
+    room4.save()
 
     response_json = json.dumps(response_data)
 
