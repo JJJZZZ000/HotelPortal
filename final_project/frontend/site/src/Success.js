@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
-import { Layout, Select, Row, Col, Space, Divider, PageHeader, Menu, icon, Typography } from "antd";
+import { Layout, Select, Row, Col, Space, Divider, PageHeader, Menu, icon, Typography, Result, Button } from "antd";
 import Room_list from './Room_list.js';
 import Carousel from './Carousel';
 import {
@@ -28,9 +28,13 @@ const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
 const IconFont = createFromIconfontCN({
     scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
-  });
+});
 
 function App() {
+    const onClick = () => {
+        window.location.href = '/';
+    }
+
     return (
         <Layout className="layout">
             <Header>
@@ -51,13 +55,23 @@ function App() {
 
             <Content style={{ padding: '0 50px', }}>
 
-               <div>success!!!!!!</div>
+                <Result
+                    status="success"
+                    title="Successfully Checkout The Order!"
+                    subTitle="Welcome to our hotel!"
+                    extra={[
+                        <Button type="primary" onClick={onClick}>
+                            Go Home Page
+                        </Button>,
+                        // <Button key="buy">Buy Again</Button>,
+                    ]}
+                />
 
             </Content>
             <Footer
                 style={{ textAlign: 'center' }}
             >
-            
+
                 Final Project Team 8
             </Footer>
         </Layout>

@@ -42,7 +42,7 @@ function App() {
                 <Menu
                     theme="dark"
                     mode="horizontal"
-                    defaultSelectedKeys={['1']}
+                    // defaultSelectedKeys={['1']}
                     items={[
                         { key: 1, label: (<Link to='/home'>home</Link>), icon: <HomeOutlined /> },
                         { key: 2, label: (<Link to='/room_list'>room list</Link>), icon: <ShopOutlined /> },
@@ -54,14 +54,16 @@ function App() {
             </Header>
 
             <Content style={{ padding: '0 50px', }}>
+
                 <Result
-                    status="warning"
-                    title="There are some problems with your operation, please try it later."
-                    extra={
+                    status="403"
+                    title="403"
+                    subTitle="Sorry, you are not authorized to access this page."
+                    extra={[
                         <Button type="primary" onClick={onClick}>
                             Go Home Page
-                        </Button>
-                    }
+                        </Button>,
+                    ]}
                 />
 
             </Content>
