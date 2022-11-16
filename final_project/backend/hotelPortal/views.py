@@ -76,10 +76,11 @@ def order_list(request):
             query_set = query_set.filter(payment__status=order_paymentStatus)
         if order_startTime:
             start_date = parse_date(order_startTime)
+            # end_date = parse_date(order_endTime)
+            query_set = query_set.filter(startTime__gte=start_date)
+        if order_endTime:
             end_date = parse_date(order_endTime)
-            query_set = query_set.filter(startTime__gte=start_date, endTime__lte=end_date)
-        if order_paymentStatus:
-            query_set = query_set.filter(payment__status=order_paymentStatus)
+            query_set = query_set.filter(endTime__lte=end_date)
         resp_data = []
         pk = 1
         for order in query_set.iterator():
@@ -90,7 +91,7 @@ def order_list(request):
             fields = {}
             fields['room'] = order.room.roomNum
             fields['paymentStatus'] = order.payment.status
-            fields['paymentPrice'] = order.payment.price
+            fields['paymentPrice'] = order.room.price * (order.endTime-order.startTime).days
             fields['startTime'] = order.startTime.strftime("%Y-%m-%d")
             fields['endTime'] = order.endTime.strftime("%Y-%m-%d")
             data['fields'] = fields
