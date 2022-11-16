@@ -234,7 +234,7 @@ def checkout(request):
             # def create_checkout_session():
             try:
                 # set up the product.
-                product = stripe.Product.create(name=payment.id)
+                product = stripe.Product.create(name=payment.id, images= ['https://randomuser.me/api/portraits/med/women/67.jpg'])
                 # set up the price.
                 stripe_payment = stripe.Price.create(product=product.id, unit_amount=payment.price, currency="usd")
                 checkout_session = stripe.checkout.Session.create(
@@ -264,6 +264,7 @@ def checkout(request):
                 #     'url': checkout_session.url,
                 # }
                 response_data.append(checkout_session.url)
+                print(checkout_session)
                 response = HttpResponse(response_data, content_type='application/json')
                 return response
 
