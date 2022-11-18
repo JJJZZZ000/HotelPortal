@@ -30,6 +30,12 @@ import django.middleware.csrf
 def home(request):
     return
 
+def login(request):
+    code = request.GET.getlist("code")[0]
+    print(code)
+    # print(code)
+
+    return
 
 def _my_json_error_response(message, status=200):
     # You can create your JSON by constructing the string representation yourself (or just use json.dumps)

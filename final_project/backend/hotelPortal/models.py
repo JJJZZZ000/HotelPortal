@@ -3,6 +3,17 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 from django.db import models
 
+from urllib.parse import urlencode
+
+from rest_framework import status, serializers
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+from django.urls import reverse
+from django.conf import settings
+from django.shortcuts import redirect
+
+
 
 class Client(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)

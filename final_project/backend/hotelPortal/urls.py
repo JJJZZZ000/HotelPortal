@@ -19,4 +19,5 @@ urlpatterns =[
     path('room_detail/<int:id>', views.room_detail),
     path('create-checkout-session', views.checkout),
     path('get_csrf_token', views.get_csrf_token),
+    path('login', views.login),
 ]
