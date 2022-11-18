@@ -32,8 +32,8 @@ const { Header, Content, Footer } = Layout;
 function App() {
   const [get, setGet] = useState(null);
 
-  const [token, setToken] = useState("");
-  const [profile, setProfile] = useState({});
+  var [token, setToken] = useState("");
+  var [profile, setProfile] = useState({});
 
   const onClick = () => {
     axios.get(demoURL).then((response) => {
@@ -61,67 +61,6 @@ function App() {
     gapi.load('client:auth2', initClient);
   });
 
-  // const openGoogleLoginPage = useCallback(() => {
-  //   const googleAuthUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
-  //   const redirectUri = 'api/v1/auth/login/google/';
-
-  //   const scope = [
-  //     'https://www.googleapis.com/auth/userinfo.email',
-  //     'https://www.googleapis.com/auth/userinfo.profile'
-  //   ].join(' ');
-
-  //   const params = {
-  //     response_type: 'code',
-  //     client_id: client_id,
-  //     redirect_uri: `http://localhost:3000`,
-  //     prompt: 'select_account',
-  //     access_type: 'offline',
-  //     scope
-  //   };
-
-  //   const urlParams = new URLSearchParams(params).toString();
-
-  //   window.location = `${googleAuthUrl}?${urlParams}`;
-  // }, []);
-
-
-  // const Login = () => {
-  //   return (
-  //     // <GoogleLogin
-  //     //   clientId={"449220278505-16qg948jt09u3cgdeb44r5h4sc1t1h9q.apps.googleusercontent.com"}  // your Google app client ID
-  //     //   buttonText="Sign in with Google"
-  //     //   onSuccess={onGoogleLoginSuccess} // perform your user logic here
-  //     //   // onFailure={onGoogleLoginFailure} // handle errors here
-  //     //   cookiePolicy={'single_host_origin'}
-  //     // />
-  //     <GoogleLogin
-  //         clientId={"449220278505-16qg948jt09u3cgdeb44r5h4sc1t1h9q.apps.googleusercontent.com"}
-  //         buttonText="Log in with Google"
-  //         onSuccess={handleLogin}
-  //         onFailure={handleLogin}
-  //         cookiePolicy={'single_host_origin'}
-  //     />
-  //   );
-  // };
-  // const handleLogin = async googleData => {
-  //   const res = await fetch("/api/v1/auth/google", {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //       token: googleData.tokenId
-  //     }),
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     }
-  //   })
-  //   const data = await res.json()
-  //   // store returned user somehow
-  // }
-
-
-  // const notifyError = (error, options) => {
-  //   error = error || 'Something went wrong.';
-  //   toast.error(error.toString(), options);
-  // };
 
   const onGoogleLoginSuccess = useCallback(
     response => {
@@ -132,41 +71,37 @@ function App() {
         last_name: response.profileObj.familyName
       };
       setToken(response.tokenId)
-      console.log(response.tokenId, response.profileObj)
-      // validateTokenAndObtainSession({ data, idToken })
-      //   // .then(handleUserInit)
-      //   .catch(notifyError);
+      window.sessionStorage.setItem('access-token',response.tokenId);
+      // console.log(window.sessionStorage.getItem('access-token'))
+      var profileObj = {
+        username:response.profileObj.name,
+        first_name:response.profileObj.givenName,
+        last_name:response.profileObj.familyName,
+        email:response.profileObj.email
+      }
+      var profileJson = JSON.stringify(profileObj);
+      setProfile(profileJson)
+      window.sessionStorage.setItem('profile', profileJson);
+      console.log("login received")
+      axios.get("http://localhost:8000/hotelPortal/login", {
+        withCredentials: true,
+        headers: {
+          'X-CSRFToken': window.sessionStorage.getItem('CSRF-Token'),
+          'access-token': window.sessionStorage.getItem('access-token'),
+          'profile':window.sessionStorage.getItem('profile'),
+        }
+      })
     },
     // [handleUserInit]
   );
   const onGoogleLogoutSuccess = useCallback(
     response => {
-      console.log("tttttt")
       setToken("")
+      window.sessionStorage.setItem('access-token',"");
+      setProfile({})
+      window.sessionStorage.setItem('profile',{});
     },
   );
-
-
-  // const handleUserInit = useCallback(
-  //   resp => {
-  //     if (resp.ok) {
-  //       setUser(resp.data);
-  //       history.push(HOME_URL);
-  //     } 
-  //     else {
-  //       notifyError(resp.data[0]);
-  //     }
-  //   },
-  //   [history, setUser]
-  // );
-  // const validateTokenAndObtainSession = ({ data, idToken }) => {
-  //   const headers = {
-  //     Authorization: idToken,
-  //     'Content-Type': 'application/json'
-  //   };
-
-  //   return post('users/init/', data, { headers });
-  // };
 
 
   function getCookie(cname) {

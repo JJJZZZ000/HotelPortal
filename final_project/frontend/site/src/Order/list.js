@@ -1,4 +1,5 @@
 import { Avatar, Button, List, Skeleton, Pagination } from 'antd';
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 const count = 3;
 // const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
@@ -8,15 +9,35 @@ function App({data, setData, list, setList}) {
   const [loading, setLoading] = useState(false);
 //   const [data, setData] = useState([]);
 //   const [list, setList] = useState([]);
-  useEffect(() => {
-    fetch(fakeDataUrl)
-      .then((res) => res.json())
-      .then((res) => {
-        setInitLoading(false);
-        setData(res);
-        setList(res);
-      });
-  }, []);
+  useEffect(() => 
+
+  {
+    console.log(window.sessionStorage.getItem('access-token'))
+  axios.get(fakeDataUrl, {
+    withCredentials: true,
+    headers: {
+      'X-CSRFToken': window.sessionStorage.getItem('CSRF-Token'),
+      'access-token': window.sessionStorage.getItem('access-token'),
+      'profile':window.sessionStorage.getItem('profile'),
+    }
+  }).catch((err) => {
+    if (err.response.status == 403) {
+      window.location.href = 'hotelPortal/#/403';
+    } else if (err.response.status == 404) {
+      window.location.href = 'hotelPortal/#/404';
+    } else if (err.response.status == 500) {
+      window.location.href = 'hotelPortal/#/500';
+    }
+  })
+  .then((res) => {
+          console.log(res)
+          setInitLoading(false);
+          setData(res.data);
+          setList(res.data);
+        });
+}
+  
+  , []);
   const onLoadMore = () => {
     setLoading(true);
     setList(

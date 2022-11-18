@@ -49,7 +49,12 @@ function App({data, setData, list, setList}) {
                     paymentStatus: paymentStatus,
                     startTime: startTime,
                     endTime: endTime,
-                }
+                },
+                headers: {
+                    'X-CSRFToken': window.sessionStorage.getItem('CSRF-Token'),
+                    'access_token': window.sessionStorage.getItem('access_token'),
+                    'profile':window.sessionStorage.getItem('profile'),
+                  }
             }).then((res) => {
                 setData(res.data);
                 setList(res.data);

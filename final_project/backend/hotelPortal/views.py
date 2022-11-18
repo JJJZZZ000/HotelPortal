@@ -1,5 +1,5 @@
 from random import randint
-
+import requests
 from django.shortcuts import render, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.core import serializers
@@ -31,12 +31,35 @@ import django.middleware.csrf
 def home(request):
     return
 
-def login(request):
-    code = request.GET.getlist("code")[0]
-    print(code)
-    # print(code)
 
-    return
+def login(request):
+    if request.headers['access-token'] is None:
+        return HttpResponse(status=403)
+    user = getUser(request)
+    if user is None:
+        response = requests.get(
+            'https://www.googleapis.com/oauth2/v3/tokeninfo',
+            params={'id_token': request.headers['access-token']}
+        )
+        if not response.ok:
+            return HttpResponse(status=403)
+        info = response.json()
+        username = info['email']
+        firstname = info['given_name']
+        lastname = info['family_name']
+        email = info['email']
+        user = User.objects.create_user(username=username,
+                                        password="111111",
+                                        email=email,
+                                        first_name=firstname,
+                                        last_name=lastname)
+        user.save()
+
+    return HttpResponse(status=200)
+
+
+
+
 
 def _my_json_error_response(message, status=200):
     # You can create your JSON by constructing the string representation yourself (or just use json.dumps)
@@ -69,7 +92,27 @@ def demo(request):
     return response
 
 
+def getUser(request):
+    access_token = request.headers['access-token']
+
+    if access_token is None:
+        return None
+    response = requests.get(
+        'https://www.googleapis.com/oauth2/v3/tokeninfo',
+        params={'id_token': access_token}
+    )
+    if not response.ok:
+        return None
+    email = response.json()['email']
+    user = User.objects.filter(email=email).first()
+    print(user.email)
+    return user
+
+
 def order_list(request):
+    user = getUser(request)
+    if user is None:
+        return HttpResponse(status=403)
     response_data = []
     if request.method == 'GET':
         order_room = request.GET.get('room', None)
@@ -94,11 +137,11 @@ def order_list(request):
             data = {}
             data['model'] = 'hotelPortal.room'
             data['pk'] = pk
-            pk = pk+1
+            pk = pk + 1
             fields = {}
             fields['room'] = order.room.roomNum
             fields['paymentStatus'] = order.payment.status
-            fields['paymentPrice'] = order.room.price * (order.endTime-order.startTime).days
+            fields['paymentPrice'] = order.room.price * (order.endTime - order.startTime).days
             fields['startTime'] = order.startTime.strftime("%Y-%m-%d")
             fields['endTime'] = order.endTime.strftime("%Y-%m-%d")
             data['fields'] = fields
@@ -214,7 +257,8 @@ def checkout(request):
                 no_conflict_rooms = []
                 for room in rooms:
                     target_room = Room.objects.filter(roomNum=room['roomNum']).all()[0]
-                    conflict_order = Order.objects.filter(room=target_room).exclude(Q(startTime__gte=end_time) | Q(endTime__lte=start_time)).all()
+                    conflict_order = Order.objects.filter(room=target_room).exclude(
+                        Q(startTime__gte=end_time) | Q(endTime__lte=start_time)).all()
                     if len(conflict_order) == 0:
                         no_conflict_rooms.append(room)
                 if len(no_conflict_rooms) == 0:
@@ -260,9 +304,11 @@ def checkout(request):
                         # @app.route('/create-checkout-session', methods=['POST'])
                         # def create_checkout_session():
                         # set up the product.
-                        product = stripe.Product.create(name=payment.id, images= ['https://randomuser.me/api/portraits/med/women/67.jpg'])
+                        product = stripe.Product.create(name=payment.id,
+                                                        images=['https://randomuser.me/api/portraits/med/women/67.jpg'])
                         # set up the price.
-                        stripe_payment = stripe.Price.create(product=product.id, unit_amount=payment.price, currency="usd")
+                        stripe_payment = stripe.Price.create(product=product.id, unit_amount=payment.price,
+                                                             currency="usd")
                         checkout_session = stripe.checkout.Session.create(
                             line_items=[
                                 {
