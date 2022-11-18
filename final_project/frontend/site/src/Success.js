@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import axios, { Axios } from "axios";
 import { Layout, Select, Row, Col, Space, Divider, PageHeader, Menu, icon, Typography, Result, Button } from "antd";
 import Room_list from './Room_list.js';
@@ -30,10 +31,39 @@ const IconFont = createFromIconfontCN({
     scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
 });
 
+const change_payment_status_URL = "http://localhost:8000/hotelPortal/change_payment_status";
+
 function App() {
     const onClick = () => {
         window.location.href = '/';
     }
+
+    const [searchParams] = useSearchParams();
+
+    useEffect(() => {
+        let paymentId = searchParams.get('payment_id')
+        axios.post(change_payment_status_URL, {
+            data: {
+                paymentId: paymentId,
+            }
+        }, {
+            withCredentials: true,
+            headers: {
+                'X-CSRFToken': window.sessionStorage.getItem('CSRF-Token')
+            }
+        }).then((res) => {
+            // deal with the response.
+
+        }).catch((err) => {
+            if (err.response.status == 403) {
+                window.location.href = 'hotelPortal/#/403';
+            } else if (err.response.status == 404) {
+                window.location.href = 'hotelPortal/#/404';
+            } else if (err.response.status == 500) {
+                window.location.href = 'hotelPortal/#/500';
+            }
+        })
+    }, [])
 
     return (
         <Layout className="layout">

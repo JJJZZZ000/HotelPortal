@@ -51,7 +51,7 @@ function App({data, setData, list, setList}) {
           lineHeight: '32px',
         }}
       >
-        <Button onClick={onLoadMore}>loading more</Button>
+        {/* <Button onClick={onLoadMore}>loading more</Button> */}
       </div>
     ) : null;
   return (

@@ -68,7 +68,10 @@ function App() {
       // deal with the response.
       setIsAddOrder([])
       setRooms([])
-
+      if(res.data === 'All rooms are booked!') {
+        window.location.href = 'hotelPortal/#/failed';
+        return;
+      } 
       window.location.href = res.data;
     }).catch((err) => {
       setIsAddOrder([])
