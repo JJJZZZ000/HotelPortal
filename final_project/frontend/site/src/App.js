@@ -218,10 +218,6 @@ function App() {
         buttonText='Logout'
         onLogoutSuccess={onGoogleLogoutSuccess}
       />}
-
-
-
-
       </Content>
       <Footer
         style={{ textAlign: 'center' }}

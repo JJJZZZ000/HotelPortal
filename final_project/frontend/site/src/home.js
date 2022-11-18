@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
 import { Layout, Select, Row, Col, Space, Divider, PageHeader, Menu, icon, Typography, Avatar } from "antd";
 import Room_list from './Room_list.js';
-
+import ImageList from './ImageList';
 import Home from './home.js';
 
 import Carousel from './Carousel';
@@ -75,6 +75,7 @@ function App() {
                         </Paragraph>
                     </Typography>
                     <Divider dashed style={{ backgroundColor: "black" }}></Divider>
+                    <ImageList />
                     <Carousel />
                     <Typography>
                         <Title>Contact Us</Title>

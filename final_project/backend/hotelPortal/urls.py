@@ -20,4 +20,5 @@ urlpatterns =[
     path('create-checkout-session', views.checkout),
     path('get_csrf_token', views.get_csrf_token),
     path('login', views.login),
+    path('change_payment_status', views.change_payment_status),
 ]
