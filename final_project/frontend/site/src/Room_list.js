@@ -3,7 +3,7 @@ import './App.css';
 import React, { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
 import qs from "qs"
-import { Layout, Select, Row, Col, Space, Typography, Divider, PageHeader, Menu, icon, Pagination, Button } from "antd";
+import { Layout, Select, Row, Col, Space, Typography, Divider, PageHeader, Menu, icon, Pagination, Button, Alert } from "antd";
 import Room_list from './Room_list.js';
 import Home from './home.js';
 import List from '../src/Room/list';
@@ -40,8 +40,18 @@ function App() {
 
   const [isAddOrder, setIsAddOrder] = useState([]);
 
+  const [isAlert, setIsAlert] = useState(false);
+
+  const onClose = () => {
+    setIsAlert(false);
+  }
+
   const onClick = () => {
     // window.location.href = checkout_URL
+    if (rooms.length == 0) {
+      setIsAlert(true);
+      return;
+    }
     axios.post(checkout_URL, {
       data: {
         rooms: rooms,
@@ -57,8 +67,22 @@ function App() {
     }).then((res) => {
       // deal with the response.
       setIsAddOrder([])
+      setRooms([])
+      if(res.data === 'All rooms are booked!') {
+        window.location.href = 'hotelPortal/#/failed';
+        return;
+      } 
       window.location.href = res.data;
-
+    }).catch((err) => {
+      setIsAddOrder([])
+      setRooms([])
+      if (err.response.status == 403) {
+        window.location.href = 'hotelPortal/#/403';
+      } else if (err.response.status == 404) {
+        window.location.href = 'hotelPortal/#/404';
+      } else if (err.response.status == 500) {
+        window.location.href = 'hotelPortal/#/500';
+      }
     })
   }
 
@@ -84,7 +108,7 @@ function App() {
         <Row >
           <Col span={16}>
             <Divider type="horizontal" />
-            <SelectComponent data={data} setData={setData} list={list} setList={setList} startTime={startTime} endTime={endTime} setStartTime={setStartTime} setEndTime={setEndTime}/>
+            <SelectComponent data={data} setData={setData} list={list} setList={setList} startTime={startTime} endTime={endTime} setStartTime={setStartTime} setEndTime={setEndTime} />
           </Col>
           <Col span={8} align='middle'>
             <Divider type="horizontal" />
@@ -95,6 +119,17 @@ function App() {
           <Col span={16}>
             <Divider type="horizontal" />
             <List data={data} setData={setData} list={list} setList={setList} rooms={rooms} setRooms={setRooms} isAddOrder={isAddOrder} setIsAddOrder={setIsAddOrder} />
+            {
+                !isAlert ? <></> :
+                  <Alert
+                    message="Unable Checkout!"
+                    description="The order could not be checkout because it's empty."
+                    type="warning"
+                    closable
+                    onClose={onClose}
+                    showIcon
+                  />
+              }
           </Col>
           <Col span={8}>
             <Divider type="horizontal" />
@@ -107,7 +142,7 @@ function App() {
                 headers={{'X-CSRFToken': window.sessionStorage.getItem('CSRF-Token')}}
                 withCredentials={true}
                 > */}
-                {/* <button type='submit'>Checkout Your Order!</button> */}
+              {/* <button type='submit'>Checkout Your Order!</button> */}
               {/* </form> */}
               <Button type="primary" onClick={onClick}>Checkout Your Order!</Button>
             </Divider>

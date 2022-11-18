@@ -22,7 +22,6 @@ import {
 } from "react-router-dom";
 
 const demoURL = "http://localhost:8000/hotelPortal/demo";
-const csrf_token_URL = "http://localhost:8000/hotelPortal/get_csrf_token";
 const { Header, Content, Footer } = Layout;
 function App() {
   const [get, setGet] = useState(null);
@@ -33,25 +32,6 @@ function App() {
       setGet(response.data[0].text);
     })
   };
-
-  useEffect(() => {
-    axios.get(csrf_token_URL)
-      .then(res => {
-        window.sessionStorage.setItem('CSRF-Token', getCookie('csrftoken'));
-      }).catch(() => {
-        throw new Error("Get CSRF token failed");
-      });
-  }, [])
-
-  function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-      var c = ca[i].trim();
-      if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-    }
-    return "";
-  }
 
   return (
     <Layout className="layout">

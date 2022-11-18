@@ -59,7 +59,7 @@ function App({ data, setData, list, setList, rooms, setRooms, isAddOrder, setIsA
                     lineHeight: '32px',
                 }}
             >
-                <Button onClick={onLoadMore}>loading more</Button>
+                {/* <Button onClick={onLoadMore}>loading more</Button> */}
             </div>
         ) : null;
 
