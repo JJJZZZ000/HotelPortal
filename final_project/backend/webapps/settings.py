@@ -45,6 +45,8 @@ CORS_ALLOW_HEADERS = [
     "hx-request",
     "hx-current-url",
     "hx-target",
+    "access-token",
+    "profile"
 ]
 
 
