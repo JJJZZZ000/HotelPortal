@@ -71,6 +71,7 @@ function App({ data, setData, list, setList, rooms, setRooms, isAddOrder, setIsA
                 roomNum: item.fields.roomNum,
                 direction: item.fields.direction,
                 price: item.fields.price,
+                roomPicture: item.fields.roomPicture,
                 time: moment().format('YYYY-MM-DD HH:mm:ss'),
             }
             setRooms(rooms => [...rooms, temp]);
@@ -94,7 +95,7 @@ function App({ data, setData, list, setList, rooms, setRooms, isAddOrder, setIsA
                 <Card
                     hoverable
                     style={{ width: 240 }}
-                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+                    cover={<img alt="example" src={item.fields.roomPicture} />}
                 >
                     <Meta title={"Room Detail For " + item.fields.roomNum} description="www.hotelportal_team8.com" />
                 </Card>
@@ -131,7 +132,7 @@ function App({ data, setData, list, setList, rooms, setRooms, isAddOrder, setIsA
                         <Skeleton avatar title={false} loading={item.loading} active>
                             <Popover content={content(item)} trigger="click">
                                 <List.Item.Meta
-                                    avatar={<Avatar src={`https://randomuser.me/api/portraits/med/women/67.jpg`} />}
+                                    avatar={<Avatar src={item.fields.roomPicture} />}
                                     title={<a>{item.fields?.roomNum}</a>}
                                     description={
                                         'Type: ' + item.fields?.type + ' ' +

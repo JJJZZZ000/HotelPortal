@@ -1,9 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from '../Setting/logo.svg';
+import '../Setting/App.css';
 import React, { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
 import { Layout, Select, Row, Col, Space, Divider, PageHeader, Menu, icon, Typography, Avatar } from "antd";
-import Room_list from './Room_list.js';
+import Room_list from '../Room/Room_list.js';
 import ImageList from './ImageList';
 import Home from './home.js';
 

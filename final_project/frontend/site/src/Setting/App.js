@@ -1,10 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect, useCallback } from "react";
 import axios, { Axios } from "axios";
 import { Layout, Select, Row, Col, Space, Typography, Divider, PageHeader, Menu, icon } from "antd";
-import Room_list from './Room_list.js';
-import Home from './home.js';
+import Room_list from '../Room/Room_list.js';
+import Home from '../Home/home.js';
 import moment from 'moment'
 import {
   HomeOutlined,

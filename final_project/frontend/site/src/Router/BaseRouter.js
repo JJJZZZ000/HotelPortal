@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import axios, { Axios } from "axios";
-import Home from './home.js';
-import App from './App';
-import Room_list from './Room_list.js';
-import Order_list from './Order_list.js';
-import Login from './Login.js';
-import Register from './Register.js';
-import Success from './Success.js';
-import Failed from './Failed.js';
-import Page_403 from './403.js';
-import Page_404 from './404.js';
-import Page_500 from './500.js';
+import Home from '../Home/home.js';
+import App from '../Setting/App';
+import Room_list from '../Room/Room_list.js';
+import Order_list from '../Order/Order_list.js';
+import Login from '../Login/Login.js';
+import Register from '../Register/Register.js';
+import Success from '../StatusPage/Success.js';
+import Failed from '../StatusPage/Failed.js';
+import Page_403 from '../StatusPage/403.js';
+import Page_404 from '../StatusPage/404.js';
+import Page_500 from '../StatusPage/500.js';
 
 
 function BasicRoute() {
