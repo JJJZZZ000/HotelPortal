@@ -1,14 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
+import '../Setting/App.css';
 import React, { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
 import qs from "qs"
 import { Layout, Select, Row, Col, Space, Typography, Divider, PageHeader, Menu, icon, Pagination, Button, Alert } from "antd";
 import Room_list from './Room_list.js';
-import Home from './home.js';
-import List from '../src/Room/list';
-import SelectComponent from '../src/Room/select'
-import ShoppingCart from '../src/Room/shopping_cart'
+import Home from '../Home/home.js';
+import List from './list';
+import SelectComponent from './select'
+import ShoppingCart from './shopping_cart'
 import moment from 'moment';
 import {
   HomeOutlined,
