@@ -421,7 +421,6 @@ def change_payment_status(request):
 def get_csrf_token(request):
     token = django.middleware.csrf.get_token(request)
     response_data = {}
-    print(token)
     # print(token)
     # response_data = {
     #     'csrf_token': token,
