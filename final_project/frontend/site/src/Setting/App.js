@@ -45,6 +45,9 @@ function App() {
     axios.get(csrf_token_URL)
       .then(res => {
         window.sessionStorage.setItem('CSRF-Token', getCookie('csrftoken'));
+        console.log("getCookie: "+getCookie('csrftoken'));
+        console.log("checkWindow: "+sessionStorage.getItem("CSRF-Token"))
+
       }).catch(() => {
         throw new Error("Get CSRF token failed");
       });

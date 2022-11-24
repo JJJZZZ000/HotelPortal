@@ -93,7 +93,11 @@ def demo(request):
 
 
 def getUser(request):
-    access_token = request.headers['access-token']
+    # for the first time logging in, request could not find 'access-token' header.
+    try:
+        access_token = request.headers['access-token']
+    except:
+        return None
 
     if access_token is None:
         return None
@@ -417,6 +421,7 @@ def change_payment_status(request):
 def get_csrf_token(request):
     token = django.middleware.csrf.get_token(request)
     response_data = {}
+    print(token)
     # print(token)
     # response_data = {
     #     'csrf_token': token,

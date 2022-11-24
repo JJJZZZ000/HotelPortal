@@ -12,7 +12,7 @@ function App({data, setData, list, setList}) {
   useEffect(() => 
 
   {
-    console.log(window.sessionStorage.getItem('access-token'))
+    // console.log(window.sessionStorage.getItem('access-token'))
   axios.get(fakeDataUrl, {
     withCredentials: true,
     headers: {
@@ -30,7 +30,7 @@ function App({data, setData, list, setList}) {
     }
   })
   .then((res) => {
-          console.log(res)
+          // console.log(res)
           setInitLoading(false);
           setData(res.data);
           setList(res.data);
