@@ -93,7 +93,11 @@ def demo(request):
 
 
 def getUser(request):
-    access_token = request.headers['access-token']
+    # for the first time logging in, request could not find 'access-token' header.
+    try:
+        access_token = request.headers['access-token']
+    except:
+        return None
 
     if access_token is None:
         return None
