@@ -45,8 +45,6 @@ function App() {
     axios.get(csrf_token_URL)
       .then(res => {
         window.sessionStorage.setItem('CSRF-Token', getCookie('csrftoken'));
-        console.log("getCookie: "+getCookie('csrftoken'));
-        console.log("checkWindow: "+sessionStorage.getItem("CSRF-Token"))
 
       }).catch(() => {
         throw new Error("Get CSRF token failed");
@@ -74,7 +72,6 @@ function App() {
       };
       setToken(response.tokenId)
       window.sessionStorage.setItem('access-token',response.tokenId);
-      // console.log(window.sessionStorage.getItem('access-token'))
       var profileObj = {
         username:response.profileObj.name,
         first_name:response.profileObj.givenName,
