@@ -71,21 +71,30 @@ function App() {
                     <Divider></Divider>
                     {/* <Title>About Us</Title> */}
                     <Typography>
-                        <Title>About Us</Title>
+                        <Title>Merulanties Inn - Feel the magic of Dali</Title>
                         <Paragraph>
-                            In the process of internal desktop applications development, many different design specs and
-                            implementations would be involved, which might cause designers and developers difficulties and
-                            duplication and reduce the efficiency of development.
-                        </Paragraph>
-                        <Paragraph>
-                            After massive project practice and summaries, Ant Design, a design language for background
-                            applications, is refined by Ant UED Team, which aims to{' '}
+                            In the center of Lijiang ancient town, there is a hidden B&B - {' '}
                             <Text strong>
-                                uniform the user interface specs for internal background projects, lower the unnecessary
-                                cost of design differences and implementation and liberate the resources of design and
-                                front-end development
-                            </Text>
+                                Merulanties Inn
+                            </Text>.
                         </Paragraph>
+                        <Paragraph>
+                            The Merulanties Inn is a New Luxury Green Hotel, where guests can experience the beauty of nature, inspiration of art and culture, and conscious green and healthy living. 
+                            We placed an emphasis on culture, nature and sustainability. 
+                        </Paragraph>
+                        <Paragraph>
+                            The owner has been operating here for 18 years, welcoming and seeing off guest everyday. 
+                        </Paragraph>
+                        <Paragraph>
+                            Natural stone, reclaimed wood crafted into floors and furnishings, old hand-carved wood doors, old wooden trunks have be turned into coffee tables, and nature is brought indoors through living green walls. 
+                            The garden is full of flowers, trees and herbs.
+                        </Paragraph>
+                        <Paragraph>
+                            The Merulanties Inn followed the Global Sustainable Tourism for Hotels Standards. 
+                            All cleaning and laundry products are naturally made, leaving no toxins for our precious ground and water resources. Energy and water saving features include passive energy saving design, solar water heating system, LED lighting, sun and lavender-dried sheets and water saving shower heads. 
+                            Our rooms have zero disposable plastics, and bathroom amenities are biodegradable. We compost organic wastes to fertilize our organic vegetables
+                        </Paragraph>
+                        
                     </Typography>
                     <Divider dashed style={{ backgroundColor: "black" }}></Divider>
                     <ImageList />

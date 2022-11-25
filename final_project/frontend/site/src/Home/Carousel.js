@@ -18,17 +18,18 @@ function App() {
           {/* <Statistic title="Order volume" value={112893} valueStyle={{textAlign:'center', color:"white"}}/>
       <Statistic title="Account Balance (CNY)" value={112893} precision={2} style={{textAlign:'center'}}/>
       <Statistic title="Feedback" value={1128} prefix={<LikeOutlined />} style={{textAlign:'center'}}/> */}
+          <h3 style={contentStyle}>"Very close to the DALI Temple. The host is very nice!"  ——— by Andy</h3>
           
           </div>
       </div>
       <div>
-        <h3 style={contentStyle}>Second Image</h3>
+        <h3 style={contentStyle}>"The inn owner, Jackie is a really nice guy. If you love music, you can play with him." ——— by Wanghui</h3>
       </div>
       <div>
-        <h3 style={contentStyle}>Third Image</h3>
+        <h3 style={contentStyle}>"Location is perfect, and they provide transportation service to the airport." ——— by Farnam</h3>
       </div>
       <div>
-        <h3 style={contentStyle}>Fourth Image</h3>
+        <h3 style={contentStyle}>"Room is clean and tidy. At night, there is a party in the central courtyard where you can communicate with friends from all over the places." ——— by Jeff</h3>
       </div>
     </Carousel>
   );
