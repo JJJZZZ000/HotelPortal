@@ -3,3 +3,4 @@
 .pyc
 0001_initial.py
 .sqlite3
+migrations
