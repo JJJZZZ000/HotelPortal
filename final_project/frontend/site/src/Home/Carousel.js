@@ -18,6 +18,7 @@ function App() {
           {/* <Statistic title="Order volume" value={112893} valueStyle={{textAlign:'center', color:"white"}}/>
       <Statistic title="Account Balance (CNY)" value={112893} precision={2} style={{textAlign:'center'}}/>
       <Statistic title="Feedback" value={1128} prefix={<LikeOutlined />} style={{textAlign:'center'}}/> */}
+          <h3 style={contentStyle}>First Image</h3>
           
           </div>
       </div>
