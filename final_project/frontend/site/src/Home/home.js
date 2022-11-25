@@ -26,6 +26,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
+import GoogleLogin from 'react-google-login';
 
 const { Header, Content, Footer } = Layout;
 const { Title, Paragraph, Text } = Typography;
@@ -41,15 +42,27 @@ function App() {
                 <Menu
                     theme="dark"
                     mode="horizontal"
+
                     defaultSelectedKeys={['1']}
                     items={[
                         { key: 1, label: (<Link to='/home'>home</Link>), icon: <HomeOutlined /> },
                         { key: 2, label: (<Link to='/room_list'>room list</Link>), icon: <ShopOutlined /> },
                         { key: 3, label: (<Link to='/order_list'>order list</Link>), icon: <WalletOutlined /> },
                         { key: 4, label: (<Link to='/login'>login</Link>), icon: <LoginOutlined /> },
-                        { key: 5, label: (<Link to='/register'>register</Link>), icon: <LogoutOutlined /> }
+                        // { key: 5, label: (<GoogleLogin buttonText='sign' style={{outerHeight:'10px'}}/>)}
                     ]}
                 />
+                <GoogleLogin
+          clientId={'449220278505-16qg948jt09u3cgdeb44r5h4sc1t1h9q.apps.googleusercontent.com'}  // your Google app client ID
+          buttonText="Sign"
+        //   onSuccess={onGoogleLoginSuccess} // perform your user logic here
+          // onFailure={onGoogleLoginFailure} // handle errors here
+          cookiePolicy={'single_host_origin'}
+          isSignedIn={true}
+          render={renderProps => (
+            <button >This is my custom Google button</button>
+          )}
+        />
             </Header>
 
             <Content style={{ padding: '0 50px', }}>

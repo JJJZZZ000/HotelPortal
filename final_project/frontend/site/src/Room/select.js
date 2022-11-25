@@ -34,6 +34,7 @@ function App({data, setData, list, setList, startTime, endTime, setStartTime, se
     const room_list_URL = "http://localhost:8000/hotelPortal/room_list";
     
     const onClick = () => {
+        console.log("select")
         axios.get(room_list_URL, 
             {
                 params: {
@@ -44,7 +45,23 @@ function App({data, setData, list, setList, startTime, endTime, setStartTime, se
                     startTime: startTime,
                     endTime: endTime,
                 }
-            }).then((res) => {
+            }, {
+                withCredentials: true,
+                headers: {
+                  // 'X-CSRFToken': window.sessionStorage.getItem('CSRF-Token')
+                  'X-CSRFToken': window.sessionStorage.getItem('CSRF-Token'),
+                  'access_token': window.sessionStorage.getItem('access-token'),
+                  'profile':window.sessionStorage.getItem('profile'),
+                }
+              }).catch((err) => {
+                if (err.response.status == 403) {
+                  window.location.href = 'hotelPortal/#/403';
+                } else if (err.response.status == 404) {
+                  window.location.href = 'hotelPortal/#/404';
+                } else if (err.response.status == 500) {
+                  window.location.href = 'hotelPortal/#/500';
+                }
+              }).then((res) => {
                 setData(res.data);
                 setList(res.data);
                 // setIsAddOrder(isAddOrder => [...isAddOrder, true])

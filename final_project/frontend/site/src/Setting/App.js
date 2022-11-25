@@ -125,8 +125,7 @@ function App() {
             { key: 1, label: (<Link to='/home'>home</Link>), icon: <HomeOutlined /> },
             { key: 2, label: (<Link to='/room_list'>room list</Link>), icon: <ShopOutlined /> },
             { key: 3, label: (<Link to='/order_list'>order list</Link>), icon: <WalletOutlined /> },
-            { key: 4, label: (<Link to='/login'>login</Link>), icon: <LoginOutlined /> },
-            { key: 5, label: (<Link to='/register'>register</Link>), icon: <LogoutOutlined /> }
+            { key: 4, label: (<Link to='/login'>login</Link>), icon: <LoginOutlined /> }
           ]}
         />
       </Header>

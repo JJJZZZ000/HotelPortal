@@ -25,8 +25,21 @@ from hotelPortal.models import Room, Order, Client, Payment
 import json
 import django.middleware.csrf
 
+from functools import wraps
 
-@login_required
+
+def google_login(function):
+    @wraps(function)
+    def wrap(request, *args, **kwargs):
+        user = getUser(request)
+        if user is None:
+            return HttpResponse(status=403)
+        else:
+            return function(request, *args, **kwargs)
+
+    return wrap
+
+
 @ensure_csrf_cookie
 def home(request):
     return
@@ -56,9 +69,6 @@ def login(request):
         user.save()
 
     return HttpResponse(status=200)
-
-
-
 
 
 def _my_json_error_response(message, status=200):
@@ -96,7 +106,9 @@ def getUser(request):
     # for the first time logging in, request could not find 'access-token' header.
     try:
         access_token = request.headers['access-token']
+        print(access_token)
     except:
+        print("no access token in header")
         return None
 
     if access_token is None:
@@ -113,10 +125,8 @@ def getUser(request):
     return user
 
 
+@google_login
 def order_list(request):
-    user = getUser(request)
-    if user is None:
-        return HttpResponse(status=403)
     response_data = []
     if request.method == 'GET':
         order_room = request.GET.get('room', None)
@@ -148,6 +158,7 @@ def order_list(request):
             fields['paymentPrice'] = order.room.price * (order.endTime - order.startTime).days
             fields['startTime'] = order.startTime.strftime("%Y-%m-%d")
             fields['endTime'] = order.endTime.strftime("%Y-%m-%d")
+            fields['roomPicture'] = order.room.roomPicture
             data['fields'] = fields
             resp_data.append(data)
         # orders = serializers.serialize("json", resp_data)
@@ -163,7 +174,7 @@ def order_list(request):
 def cancel_order(request):
     return
 
-
+@google_login
 def room_list(request):
     response_data = []
     if request.method == 'GET':
@@ -227,6 +238,7 @@ def room_list(request):
 
 
 # deprecated
+@google_login
 def room_detail(request, id):
     response_data = []
     if request.method == 'GET':
@@ -240,6 +252,7 @@ def room_detail(request, id):
 
 
 @ensure_csrf_cookie
+@google_login
 def checkout(request):
     response_data = []
     if request.method == 'POST':
@@ -366,10 +379,14 @@ def add_room(request):
     roomPicture2 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMlPGxaNOGgbwuqZgZcJ2EqKgBVdL0HZ7T9w&usqp=CAU"
     roomPicture3 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4eR2ZNo5m4tF_dOjR-UMKLIVdhyxH7wCYrQ&usqp=CAU"
     roomPicture4 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTe1M3BVgc5ENOYkVy6GbInsKwzFVMWsu5scg&usqp=CAU"
-    room1 = Room(type=Room.Standard, occupancy=2, roomNum='A101', direction=Room.East, price=200, roomPicture=roomPicture1)
-    room2 = Room(type=Room.Deluxe, occupancy=3, roomNum='A102', direction=Room.West, price=500, roomPicture=roomPicture2)
-    room3 = Room(type=Room.Suite, occupancy=4, roomNum='A103', direction=Room.North, price=700, roomPicture=roomPicture3)
-    room4 = Room(type=Room.Connecting, occupancy=5, roomNum='A104', direction=Room.South, price=100, roomPicture=roomPicture4)
+    room1 = Room(type=Room.Standard, occupancy=2, roomNum='A101', direction=Room.East, price=200,
+                 roomPicture=roomPicture1)
+    room2 = Room(type=Room.Deluxe, occupancy=3, roomNum='A102', direction=Room.West, price=500,
+                 roomPicture=roomPicture2)
+    room3 = Room(type=Room.Suite, occupancy=4, roomNum='A103', direction=Room.North, price=700,
+                 roomPicture=roomPicture3)
+    room4 = Room(type=Room.Connecting, occupancy=5, roomNum='A104', direction=Room.South, price=100,
+                 roomPicture=roomPicture4)
     room1.save()
     room2.save()
     room3.save()
