@@ -58,7 +58,7 @@ function App() {
                     <Divider></Divider>
                     {/* <Title>About Us</Title> */}
                     <Typography>
-                        <Title>Merulanties Inn - Feel the magic of Dali</Title>
+                        <Title>Merulanties Inn - FEEL THE MAGIC OF DALI!!!</Title>
                         <Paragraph>
                             In the center of Lijiang ancient town, there is a hidden B&B - {' '}
                             <Text strong>
@@ -79,7 +79,7 @@ function App() {
                         <Paragraph>
                             The Merulanties Inn followed the Global Sustainable Tourism for Hotels Standards. 
                             All cleaning and laundry products are naturally made, leaving no toxins for our precious ground and water resources. Energy and water saving features include passive energy saving design, solar water heating system, LED lighting, sun and lavender-dried sheets and water saving shower heads. 
-                            Our rooms have zero disposable plastics, and bathroom amenities are biodegradable. We compost organic wastes to fertilize our organic vegetables
+                            Our rooms have zero disposable plastics, and bathroom amenities are biodegradable. We compost organic wastes to fertilize our organic vegetables.
                         </Paragraph>
                         
                     </Typography>
@@ -98,24 +98,24 @@ function App() {
                 <div style={{ color: "black" }}>
                     {/* <Title style={{ color: "black" }}>Contact Us</Title> */}
                     <Row justify="center" align="top">
-                        <Col span={8}><Avatar src="/1.jpg" /> <Text>Liu Jiaqi</Text></Col>
+                        <Col span={8}><Avatar src="/1.jpg" /> <Text>Jiaqi Liu</Text></Col>
                         <Col span={8}><Avatar src="/2.JPG" /> <Text>Jie Zhu</Text></Col>
-                        <Col span={8}><Avatar src="/3.jpeg" /> <Text>Haorong Zhu</Text></Col>
+                        <Col span={8}><Avatar src="/3.jpg" /> <Text>Haorong Zhu</Text></Col>
                     </Row>
                     <Row>
                         <Col span={8}><MailOutlined /> jiaqili3@andrew.cmu.edu</Col>
-                        <Col span={8}><MailOutlined /> Jie Zhu@andrew.cmu.edu</Col>
-                        <Col span={8}><MailOutlined /> Haorong Zhu@andrew.cmu.edu</Col>
+                        <Col span={8}><MailOutlined /> jiezhu2@andrew.cmu.edu</Col>
+                        <Col span={8}><MailOutlined /> haorong2@andrew.cmu.edu</Col>
                     </Row>
                     <Row>
                         <Col span={8}><PhoneOutlined /> +1 412 954 8356</Col>
                         <Col span={8}><PhoneOutlined /> +1 412 954 8360</Col>
-                        <Col span={8}><PhoneOutlined /> +1 000 000 0000</Col>
+                        <Col span={8}><PhoneOutlined /> +1 412 579 0281</Col>
                     </Row>
                     <Row>
                         <Col span={8}><IdcardOutlined /> jiaqili3</Col>
                         <Col span={8}><IdcardOutlined /> jiezhu2</Col>
-                        <Col span={8}><IdcardOutlined /> haorongzhu</Col>
+                        <Col span={8}><IdcardOutlined /> haorong2</Col>
                     </Row>
                 </div>
                 <Divider></Divider>
