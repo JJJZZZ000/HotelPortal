@@ -363,18 +363,29 @@ def checkout(request):
 
 def add_room(request):
     response_data = []
-    roomPicture1 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGMkH20Fc2sMlDoCMMMFoLLPe6ZP2-lMwSgg&usqp=CAU"
-    roomPicture2 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMlPGxaNOGgbwuqZgZcJ2EqKgBVdL0HZ7T9w&usqp=CAU"
-    roomPicture3 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4eR2ZNo5m4tF_dOjR-UMKLIVdhyxH7wCYrQ&usqp=CAU"
-    roomPicture4 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTe1M3BVgc5ENOYkVy6GbInsKwzFVMWsu5scg&usqp=CAU"
-    room1 = Room(type=Room.Standard, occupancy=2, roomNum='A101', direction=Room.East, price=200, roomPicture=roomPicture1)
-    room2 = Room(type=Room.Deluxe, occupancy=3, roomNum='A102', direction=Room.West, price=500, roomPicture=roomPicture2)
-    room3 = Room(type=Room.Suite, occupancy=4, roomNum='A103', direction=Room.North, price=700, roomPicture=roomPicture3)
-    room4 = Room(type=Room.Connecting, occupancy=5, roomNum='A104', direction=Room.South, price=100, roomPicture=roomPicture4)
+    roomPicture1 = "https://dimg04.c-ctrip.com/images/0205y1200097wy58mD481_W_1080_808_R5_D.jpg"
+    roomPicture2 = "https://dimg04.c-ctrip.com/images/0204o1200097wypfc6ECD_W_1080_808_R5_D.jpg"
+    roomPicture3 = "https://dimg04.c-ctrip.com/images/020341200097vfwefDFC4_W_1080_808_R5_D.jpg"
+    roomPicture4 = "https://dimg04.c-ctrip.com/images/0200x1200097wyqv74F65_W_1080_808_R5_D.jpg"
+    roomPicture5 = "https://dimg04.c-ctrip.com/images/020271200097x0k3pBF2D_W_1080_808_R5_D.jpg"
+    roomPicture6 = "https://dimg04.c-ctrip.com/images/0200t1200097wzpce7AE3_W_1080_808_R5_D.jpg"
+    roomPicture7 = "https://dimg04.c-ctrip.com/images/020401200097x13rc076C_W_1080_808_R5_D.jpg"
+
+    room1 = Room(type=Room.Standard, occupancy=2, roomNum='A101', direction=Room.East, price=100, roomPicture=roomPicture1)
+    room2 = Room(type=Room.Standard, occupancy=2, roomNum='A102', direction=Room.West, price=110, roomPicture=roomPicture2)
+    room3 = Room(type=Room.Standard, occupancy=2, roomNum='A103', direction=Room.South, price=120, roomPicture=roomPicture3)
+    room4 = Room(type=Room.Deluxe, occupancy=2, roomNum='A201', direction=Room.North, price=150, roomPicture=roomPicture4)
+    room5 = Room(type=Room.Suite, occupancy=2, roomNum='A202', direction=Room.West, price=150, roomPicture=roomPicture5)
+    room6 = Room(type=Room.Suite, occupancy=3, roomNum='A301', direction=Room.South, price=200, roomPicture=roomPicture6)
+    room7 = Room(type=Room.Connecting, occupancy=4, roomNum='A302', direction=Room.East, price=300, roomPicture=roomPicture7)
+
     room1.save()
     room2.save()
     room3.save()
     room4.save()
+    room5.save()
+    room6.save()
+    room7.save()
 
     response_json = json.dumps(response_data)
 
