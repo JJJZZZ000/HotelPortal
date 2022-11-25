@@ -1,10 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
+import '../Setting/App.css';
 import React, { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
 import { Layout, Select, Row, Col, Space, Divider, PageHeader, Menu, icon, Typography, Result, Button } from "antd";
-import Room_list from './Room_list.js';
-import Carousel from './Carousel';
+import Room_list from '../Room/Room_list.js';
+import Carousel from '../Home/Carousel';
 import {
     HomeOutlined,
     ShopOutlined,

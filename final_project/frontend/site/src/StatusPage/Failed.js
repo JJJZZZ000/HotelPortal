@@ -1,10 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
+import '../Setting/App.css';
 import React, { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
 import { Layout, Select, Row, Col, Space, Divider, PageHeader, Menu, icon, Typography, Result, Button } from "antd";
-import Room_list from './Room_list.js';
-import Carousel from './Carousel';
+import Room_list from '../Room/Room_list.js';
+import Carousel from '../Home/Carousel';
 import {
     HomeOutlined,
     ShopOutlined,
@@ -42,7 +41,7 @@ function App() {
                 <Menu
                     theme="dark"
                     mode="horizontal"
-                    // defaultSelectedKeys={['1']}
+                    defaultSelectedKeys={['1']}
                     items={[
                         { key: 1, label: (<Link to='/home'>home</Link>), icon: <HomeOutlined /> },
                         { key: 2, label: (<Link to='/room_list'>room list</Link>), icon: <ShopOutlined /> },
@@ -54,16 +53,14 @@ function App() {
             </Header>
 
             <Content style={{ padding: '0 50px', }}>
-
                 <Result
-                    status="500"
-                    title="500"
-                    subTitle="Sorry, something went wrong."
-                    extra={[
+                    status="warning"
+                    title="There are some problems with your operation, please try it later."
+                    extra={
                         <Button type="primary" onClick={onClick}>
                             Go Home Page
-                        </Button>,
-                    ]}
+                        </Button>
+                    }
                 />
 
             </Content>

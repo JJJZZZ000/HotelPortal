@@ -1,10 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect, useCallback } from "react";
 import axios, { Axios } from "axios";
 import { Layout, Select, Row, Col, Space, Typography, Divider, PageHeader, Menu, icon } from "antd";
-import Room_list from './Room_list.js';
-import Home from './home.js';
+import Room_list from '../Room/Room_list.js';
+import Home from '../Home/home.js';
 import moment from 'moment'
 import {
   HomeOutlined,
@@ -46,6 +45,7 @@ function App() {
     axios.get(csrf_token_URL)
       .then(res => {
         window.sessionStorage.setItem('CSRF-Token', getCookie('csrftoken'));
+
       }).catch(() => {
         throw new Error("Get CSRF token failed");
       });
@@ -72,7 +72,6 @@ function App() {
       };
       setToken(response.tokenId)
       window.sessionStorage.setItem('access-token',response.tokenId);
-      // console.log(window.sessionStorage.getItem('access-token'))
       var profileObj = {
         username:response.profileObj.name,
         first_name:response.profileObj.givenName,

@@ -5,9 +5,6 @@ from django.db import models
 
 from urllib.parse import urlencode
 
-from rest_framework import status, serializers
-from rest_framework.views import APIView
-from rest_framework.response import Response
 
 from django.urls import reverse
 from django.conf import settings
@@ -80,6 +77,7 @@ class Room(models.Model):
         default=North
     )
     price = models.FloatField(validators=[MinValueValidator(0)], )
+    roomPicture = models.CharField(blank=True, max_length=10000)
 
 
 class Order(models.Model):

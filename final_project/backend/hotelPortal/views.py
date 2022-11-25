@@ -93,7 +93,11 @@ def demo(request):
 
 
 def getUser(request):
-    access_token = request.headers['access-token']
+    # for the first time logging in, request could not find 'access-token' header.
+    try:
+        access_token = request.headers['access-token']
+    except:
+        return None
 
     if access_token is None:
         return None
@@ -105,7 +109,7 @@ def getUser(request):
         return None
     email = response.json()['email']
     user = User.objects.filter(email=email).first()
-    print(user.email)
+    # print(user.email)
     return user
 
 
@@ -211,7 +215,6 @@ def room_list(request):
         query_set = query_set.exclude(roomNum__in=room_ids)
         rooms = serializers.serialize("json", query_set)
         response_data = rooms
-        print(type(rooms))
         print(rooms)
 
     # response_json = json.dumps(response_data)
@@ -303,8 +306,11 @@ def checkout(request):
                         # @app.route('/create-checkout-session', methods=['POST'])
                         # def create_checkout_session():
                         # set up the product.
+                        picture = ''
+                        for room in rooms:
+                            picture = room['roomPicture']
                         product = stripe.Product.create(name=payment.id,
-                                                        images=['https://randomuser.me/api/portraits/med/women/67.jpg'])
+                                                        images=[picture])
                         # set up the price.
                         stripe_payment = stripe.Price.create(product=product.id, unit_amount=payment.price,
                                                              currency="usd")
@@ -356,10 +362,14 @@ def checkout(request):
 
 def add_room(request):
     response_data = []
-    room1 = Room(type=Room.Standard, occupancy=2, roomNum='A101', direction=Room.East, price=200)
-    room2 = Room(type=Room.Deluxe, occupancy=3, roomNum='A102', direction=Room.West, price=500)
-    room3 = Room(type=Room.Suite, occupancy=4, roomNum='A103', direction=Room.North, price=700)
-    room4 = Room(type=Room.Connecting, occupancy=5, roomNum='A104', direction=Room.South, price=100)
+    roomPicture1 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGMkH20Fc2sMlDoCMMMFoLLPe6ZP2-lMwSgg&usqp=CAU"
+    roomPicture2 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMlPGxaNOGgbwuqZgZcJ2EqKgBVdL0HZ7T9w&usqp=CAU"
+    roomPicture3 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4eR2ZNo5m4tF_dOjR-UMKLIVdhyxH7wCYrQ&usqp=CAU"
+    roomPicture4 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTe1M3BVgc5ENOYkVy6GbInsKwzFVMWsu5scg&usqp=CAU"
+    room1 = Room(type=Room.Standard, occupancy=2, roomNum='A101', direction=Room.East, price=200, roomPicture=roomPicture1)
+    room2 = Room(type=Room.Deluxe, occupancy=3, roomNum='A102', direction=Room.West, price=500, roomPicture=roomPicture2)
+    room3 = Room(type=Room.Suite, occupancy=4, roomNum='A103', direction=Room.North, price=700, roomPicture=roomPicture3)
+    room4 = Room(type=Room.Connecting, occupancy=5, roomNum='A104', direction=Room.South, price=100, roomPicture=roomPicture4)
     room1.save()
     room2.save()
     room3.save()

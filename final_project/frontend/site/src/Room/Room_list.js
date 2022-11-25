@@ -1,14 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
+import '../Setting/App.css';
 import React, { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
 import qs from "qs"
 import { Layout, Select, Row, Col, Space, Typography, Divider, PageHeader, Menu, icon, Pagination, Button, Alert } from "antd";
 import Room_list from './Room_list.js';
-import Home from './home.js';
-import List from '../src/Room/list';
-import SelectComponent from '../src/Room/select'
-import ShoppingCart from '../src/Room/shopping_cart'
+import Home from '../Home/home.js';
+import List from './list';
+import SelectComponent from './select'
+import ShoppingCart from './shopping_cart'
 import moment from 'moment';
 import {
   HomeOutlined,
@@ -66,15 +65,25 @@ function App() {
       }
     }).then((res) => {
       // deal with the response.
-      setIsAddOrder([])
+      // setIsAddOrder([])//
+      // setIsAddOrder(isAddOrder => [...isAddOrder, true])
+      isAddOrder.forEach(element => {
+        return setIsAddOrder(isAddOrder => [...isAddOrder, true]);
+    });
       setRooms([])
       if(res.data === 'All rooms are booked!') {
         window.location.href = 'hotelPortal/#/failed';
         return;
       } 
       window.location.href = res.data;
+      // window.location.reload();
+      
     }).catch((err) => {
-      setIsAddOrder([])
+      // setIsAddOrder([])//
+      // setIsAddOrder(isAddOrder => [...isAddOrder, true])
+      isAddOrder.forEach(element => {
+        return setIsAddOrder(isAddOrder => [...isAddOrder, true]);
+    });
       setRooms([])
       if (err.response.status == 403) {
         window.location.href = 'hotelPortal/#/403';
@@ -108,7 +117,7 @@ function App() {
         <Row >
           <Col span={16}>
             <Divider type="horizontal" />
-            <SelectComponent data={data} setData={setData} list={list} setList={setList} startTime={startTime} endTime={endTime} setStartTime={setStartTime} setEndTime={setEndTime} />
+            <SelectComponent data={data} setData={setData} list={list} setList={setList} startTime={startTime} endTime={endTime} setStartTime={setStartTime} setEndTime={setEndTime} isAddOrder={isAddOrder} setIsAddOrder={setIsAddOrder}/>
           </Col>
           <Col span={8} align='middle'>
             <Divider type="horizontal" />
