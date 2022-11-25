@@ -58,25 +58,28 @@ function App() {
                     <Divider></Divider>
                     {/* <Title>About Us</Title> */}
                     <Typography>
-                        <Title>Merulanties - Feel the magic of Dali</Title>
+                        <Title>Merulanties Inn - Feel the magic of Dali</Title>
                         <Paragraph>
-                            In the center of Lijiang ancient town, there is a hidden B&B - {' '} .
+                            In the center of Lijiang ancient town, there is a hidden B&B - {' '}
                             <Text strong>
-                                Merulanties
-                            </Text>
+                                Merulanties Inn
+                            </Text>.
                         </Paragraph>
                         <Paragraph>
-                            The owner has been operating here for 18 years, welcoming and seeing off guest everyday.
-                            Merulanties is surrounded by food market, variety of lexisure entertainment, where you can go and visit.
+                            The Merulanties Inn is a New Luxury Green Hotel, where guests can experience the beauty of nature, inspiration of art and culture, and conscious green and healthy living. 
+                            We placed an emphasis on culture, nature and sustainability. 
                         </Paragraph>
                         <Paragraph>
-                            Homestay is a new style of light Zen Naxi ancient courtyard, spacious and bright rooms, sound insulation, new intelligent facilities.
+                            The owner has been operating here for 18 years, welcoming and seeing off guest everyday. 
                         </Paragraph>
                         <Paragraph>
-                        The public area has free tea tasting area for guests, full coverage of Wi-Fi, multiple tea rooms and 20-seat multi-function hall, 
-                        which can receive tourists and small business groups. Guest rooms are designed with the theme of simplicity, Zen and tea, 
-                        with complete facilities. Guest rooms are equipped with refrigerators, humidifiers and a full set of disposable products, 
-                        ensuring a comfortable, healthy and luxurious experience.
+                            Natural stone, reclaimed wood crafted into floors and furnishings, old hand-carved wood doors, old wooden trunks have be turned into coffee tables, and nature is brought indoors through living green walls. 
+                            The garden is full of flowers, trees and herbs.
+                        </Paragraph>
+                        <Paragraph>
+                            The Merulanties Inn followed the Global Sustainable Tourism for Hotels Standards. 
+                            All cleaning and laundry products are naturally made, leaving no toxins for our precious ground and water resources. Energy and water saving features include passive energy saving design, solar water heating system, LED lighting, sun and lavender-dried sheets and water saving shower heads. 
+                            Our rooms have zero disposable plastics, and bathroom amenities are biodegradable. We compost organic wastes to fertilize our organic vegetables
                         </Paragraph>
                         
                     </Typography>
