@@ -7,7 +7,7 @@ import moment from 'moment';
 
 const { Text, Link, Title } = Typography;
 
-function App({data, setData, list, setList, startTime, endTime, setStartTime, setEndTime}) {
+function App({data, setData, list, setList, startTime, endTime, setStartTime, setEndTime, isAddOrder, setIsAddOrder}) {
     const [type, setType] = useState("");
     const [direction, setDirection] = useState("");
     const [occupancy, setOccupancy] = useState("");
@@ -47,6 +47,12 @@ function App({data, setData, list, setList, startTime, endTime, setStartTime, se
             }).then((res) => {
                 setData(res.data);
                 setList(res.data);
+                // setIsAddOrder(isAddOrder => [...isAddOrder, true])
+                console.log(res);
+                res.data.forEach(element => {
+                    return setIsAddOrder(isAddOrder => [...isAddOrder, true]);
+                });
+                
             })
     };
 

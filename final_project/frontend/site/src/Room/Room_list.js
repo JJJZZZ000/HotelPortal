@@ -65,15 +65,25 @@ function App() {
       }
     }).then((res) => {
       // deal with the response.
-      setIsAddOrder([])
+      // setIsAddOrder([])//
+      // setIsAddOrder(isAddOrder => [...isAddOrder, true])
+      isAddOrder.forEach(element => {
+        return setIsAddOrder(isAddOrder => [...isAddOrder, true]);
+    });
       setRooms([])
       if(res.data === 'All rooms are booked!') {
         window.location.href = 'hotelPortal/#/failed';
         return;
       } 
       window.location.href = res.data;
+      // window.location.reload();
+      
     }).catch((err) => {
-      setIsAddOrder([])
+      // setIsAddOrder([])//
+      // setIsAddOrder(isAddOrder => [...isAddOrder, true])
+      isAddOrder.forEach(element => {
+        return setIsAddOrder(isAddOrder => [...isAddOrder, true]);
+    });
       setRooms([])
       if (err.response.status == 403) {
         window.location.href = 'hotelPortal/#/403';
@@ -107,7 +117,7 @@ function App() {
         <Row >
           <Col span={16}>
             <Divider type="horizontal" />
-            <SelectComponent data={data} setData={setData} list={list} setList={setList} startTime={startTime} endTime={endTime} setStartTime={setStartTime} setEndTime={setEndTime} />
+            <SelectComponent data={data} setData={setData} list={list} setList={setList} startTime={startTime} endTime={endTime} setStartTime={setStartTime} setEndTime={setEndTime} isAddOrder={isAddOrder} setIsAddOrder={setIsAddOrder}/>
           </Col>
           <Col span={8} align='middle'>
             <Divider type="horizontal" />
