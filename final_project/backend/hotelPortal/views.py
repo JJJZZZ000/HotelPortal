@@ -202,7 +202,6 @@ def room_list(request):
             end_time = now + timedelta(days=1)
         # else:
         # process with the startTime format.
-
         # get all orders which have a crash with the target time period.
         orders = Order.objects.exclude(Q(startTime__gte=end_time) | Q(endTime__lte=start_time)).all()
         room_ids = []
