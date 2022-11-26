@@ -83,15 +83,11 @@ function App({data, setData, list, setList}) {
       loadMore={loadMore}
       dataSource={list}
       renderItem={(item) => {
-        // {console.log(item)}
         return <List.Item
-        //   actions={[<a href="http://localhost:8000/hotelPortal/cancel_order">cancel_order</a>
-        // //   , <a key="list-loadmore-more">more</a>
-        // ]}
         >
           <Skeleton avatar title={false} loading={item.loading} active>
             <List.Item.Meta
-              avatar={<Avatar src={`https://randomuser.me/api/portraits/med/women/67.jpg`} />}
+              avatar={<Avatar src={item.fields.roomPicture} />}
               title={<a href="https://ant.design">{item.fields?.roomNum}</a>}
               description={
                   'Room: '+ item.fields?.room+' '+

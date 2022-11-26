@@ -13,16 +13,33 @@ function App({ data, setData, list, setList, rooms, setRooms, isAddOrder, setIsA
     //   const [data, setData] = useState([]);
     //   const [list, setList] = useState([]);
     useEffect(() => {
-        fetch(room_list_URL)
-            .then((res) => res.json())
-            .then((res) => {
+        axios.get(room_list_URL, 
+            {
+                withCredentials: true,
+                headers: {
+                  'X-CSRFToken': window.sessionStorage.getItem('CSRF-Token'),
+                  'access-token': window.sessionStorage.getItem('access-token'),
+                  'profile':window.sessionStorage.getItem('profile'),
+                }
+              }).catch((err) => {
+                if (err.response.status == 403) {
+                  window.location.href = 'hotelPortal/#/403';
+                } else if (err.response.status == 404) {
+                  window.location.href = 'hotelPortal/#/404';
+                } else if (err.response.status == 500) {
+                  window.location.href = 'hotelPortal/#/500';
+                }
+              }).then((res) => {
+                console.log(res)
                 setInitLoading(false);
-                setData(res);
-                setList(res);
-
-                res.forEach(element => {
+                setData(res.data);
+                setList(res.data);
+                // setIsAddOrder(isAddOrder => [...isAddOrder, true])
+                console.log(res);
+                res.data.forEach(element => {
                     return setIsAddOrder(isAddOrder => [...isAddOrder, true]);
                 });
+                
             });
     }, []);
     const onLoadMore = () => {

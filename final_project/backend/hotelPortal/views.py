@@ -25,8 +25,21 @@ from hotelPortal.models import Room, Order, Client, Payment
 import json
 import django.middleware.csrf
 
+from functools import wraps
 
-@login_required
+
+def google_login(function):
+    @wraps(function)
+    def wrap(request, *args, **kwargs):
+        user = getUser(request)
+        if user is None:
+            return HttpResponse(status=403)
+        else:
+            return function(request, *args, **kwargs)
+
+    return wrap
+
+
 @ensure_csrf_cookie
 def home(request):
     return
@@ -53,12 +66,16 @@ def login(request):
                                         email=email,
                                         first_name=firstname,
                                         last_name=lastname)
+        # data = {
+        #     'name':info['name'],
+        #     'firstname':info['given_name'],
+        #     'lastname':info['family_name'],
+        #     'email':info['email'],
+        #     'picture':info['picture']
+        # }
+        # resp_data = json.dumps(data)
         user.save()
-
     return HttpResponse(status=200)
-
-
-
 
 
 def _my_json_error_response(message, status=200):
@@ -96,7 +113,9 @@ def getUser(request):
     # for the first time logging in, request could not find 'access-token' header.
     try:
         access_token = request.headers['access-token']
+        print(access_token)
     except:
+        print("no access token in header")
         return None
 
     if access_token is None:
@@ -113,10 +132,8 @@ def getUser(request):
     return user
 
 
+@google_login
 def order_list(request):
-    user = getUser(request)
-    if user is None:
-        return HttpResponse(status=403)
     response_data = []
     if request.method == 'GET':
         order_room = request.GET.get('room', None)
@@ -148,6 +165,7 @@ def order_list(request):
             fields['paymentPrice'] = order.room.price * (order.endTime - order.startTime).days
             fields['startTime'] = order.startTime.strftime("%Y-%m-%d")
             fields['endTime'] = order.endTime.strftime("%Y-%m-%d")
+            fields['roomPicture'] = order.room.roomPicture
             data['fields'] = fields
             resp_data.append(data)
         # orders = serializers.serialize("json", resp_data)
@@ -163,7 +181,7 @@ def order_list(request):
 def cancel_order(request):
     return
 
-
+@google_login
 def room_list(request):
     response_data = []
     if request.method == 'GET':
@@ -206,7 +224,6 @@ def room_list(request):
             end_time = now + timedelta(days=1)
         # else:
         # process with the startTime format.
-
         # get all orders which have a crash with the target time period.
         orders = Order.objects.exclude(Q(startTime__gte=end_time) | Q(endTime__lte=start_time)).all()
         room_ids = []
@@ -228,6 +245,7 @@ def room_list(request):
 
 
 # deprecated
+@google_login
 def room_detail(request, id):
     response_data = []
     if request.method == 'GET':
@@ -241,6 +259,7 @@ def room_detail(request, id):
 
 
 @ensure_csrf_cookie
+@google_login
 def checkout(request):
     response_data = []
     if request.method == 'POST':

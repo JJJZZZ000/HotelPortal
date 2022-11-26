@@ -52,10 +52,19 @@ function App({data, setData, list, setList}) {
                 },
                 headers: {
                     'X-CSRFToken': window.sessionStorage.getItem('CSRF-Token'),
-                    'access_token': window.sessionStorage.getItem('access_token'),
+                    'access_token': window.sessionStorage.getItem('access-token'),
                     'profile':window.sessionStorage.getItem('profile'),
                   }
-            }).then((res) => {
+            })
+            .catch((err) => {
+                if (err.response.status == 403) {
+                  window.location.href = 'hotelPortal/#/403';
+                } else if (err.response.status == 404) {
+                  window.location.href = 'hotelPortal/#/404';
+                } else if (err.response.status == 500) {
+                  window.location.href = 'hotelPortal/#/500';
+                }
+              }).then((res) => {
                 setData(res.data);
                 setList(res.data);
             })
@@ -64,13 +73,13 @@ function App({data, setData, list, setList}) {
     return (
         <>
             <Text>Room Number:</Text>
-            <Input placeholder="e.g. A101" onBlur={onBlur} style={{width: 140,}}/>
+            <Input placeholder="e.g. A101" onBlur={onBlur} style={{width: 90,}}/>
             <Divider type="vertical" />
-            <Text>Payment Status: </Text>
-            <Select
+            <Text >Payment Status: </Text>
+            <Select 
                 defaultValue=""
                 style={{
-                    width: 140,
+                    width: 90,
                 }}
                 onChange={handlePaymentStatusChange}
                 options={[
