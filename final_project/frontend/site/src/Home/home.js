@@ -52,17 +52,6 @@ function App() {
                         // { key: 5, label: (<GoogleLogin buttonText='sign' style={{outerHeight:'10px'}}/>)}
                     ]}
                 />
-                <GoogleLogin
-          clientId={'449220278505-16qg948jt09u3cgdeb44r5h4sc1t1h9q.apps.googleusercontent.com'}  // your Google app client ID
-          buttonText="Sign"
-        //   onSuccess={onGoogleLoginSuccess} // perform your user logic here
-          // onFailure={onGoogleLoginFailure} // handle errors here
-          cookiePolicy={'single_host_origin'}
-          isSignedIn={true}
-          render={renderProps => (
-            <button >This is my custom Google button</button>
-          )}
-        />
             </Header>
 
             <Content style={{ padding: '0 50px', }}>

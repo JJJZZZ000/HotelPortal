@@ -66,8 +66,15 @@ def login(request):
                                         email=email,
                                         first_name=firstname,
                                         last_name=lastname)
+        # data = {
+        #     'name':info['name'],
+        #     'firstname':info['given_name'],
+        #     'lastname':info['family_name'],
+        #     'email':info['email'],
+        #     'picture':info['picture']
+        # }
+        # resp_data = json.dumps(data)
         user.save()
-
     return HttpResponse(status=200)
 
 
