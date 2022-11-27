@@ -38,7 +38,7 @@ function BasicRoute() {
     return (
         <HashRouter>
             <Routes>
-                <Route exact path="/" element={<App />} />
+                <Route exact path="/" element={<Home />} />
                 <Route exact path="/home" element={<Home />} />
                 <Route exact path="/room_list" element={<Room_list />} />
                 <Route exact path="/order_list" element={<Order_list />} />
