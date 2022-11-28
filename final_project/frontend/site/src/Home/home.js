@@ -145,7 +145,7 @@ function App() {
                         {
                             Object.keys(profile).length === 0
                                 ? <Avatar icon={<UserOutlined />} /> :
-                                <Avatar src={profile.picture} imgProps={{ referrerPolicy: "no-referrer" }}></Avatar>
+                                <Avatar src={profile.picture}></Avatar>
                         }
                     </Popover>
                 </div>
