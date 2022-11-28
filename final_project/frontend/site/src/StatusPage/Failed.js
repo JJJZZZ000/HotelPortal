@@ -33,6 +33,12 @@ const IconFont = createFromIconfontCN({
 });
 
 function App() {
+  useEffect(()=>{
+    var p = window.localStorage.getItem("profile")
+    if(p !== null && Object.keys(profile).length !== 0){
+      setProfile(JSON.parse(window.localStorage.getItem("profile")))
+    }
+  },[])
     const onClick = () => {
         window.location.href = '/';
     }
@@ -40,60 +46,65 @@ function App() {
     var [token, setToken] = useState("");
     var [profile, setProfile] = useState({});
     const onGoogleLoginSuccess = useCallback(
-    response => {
-      console.log(response)
-      const idToken = response.tokenId;
-      const data = {
-        email: response.profileObj.email,
-        first_name: response.profileObj.givenName,
-        last_name: response.profileObj.familyName,
-        username: response.profileObj.name,
-        picture: response.profileObj.imageUrl
-      };
-      setToken(response.tokenId)
-      window.sessionStorage.setItem('access-token',response.tokenId);
-      setProfile(response.data)
-      window.sessionStorage.setItem('profile', response.data);
-      var profileObj = {
-        username:response.profileObj.name,
-        first_name:response.profileObj.givenName,
-        last_name:response.profileObj.familyName,
-        email:response.profileObj.email,
-        picture:response.profileObj.imageUrl
-      }
-      var profileJson = JSON.stringify(profileObj);
-      setProfile(profileJson)
-      window.sessionStorage.setItem('profile', profileJson);
-      console.log("login received")
-      axios.get("http://localhost:8000/hotelPortal/login", {
-        withCredentials: true,
-        headers: {
-          'X-CSRFToken': window.sessionStorage.getItem('CSRF-Token'),
-          'access-token': window.sessionStorage.getItem('access-token'),
-          'profile':window.sessionStorage.getItem('profile'),
-        }
-      })
-      console.log(window.sessionStorage.getItem("profile"))
-      // window.location.reload()
-    },
-    // [handleUserInit]
+      response => {
+          const idToken = response.tokenId;
+          const data = {
+              email: response.profileObj.email,
+              first_name: response.profileObj.givenName,
+              last_name: response.profileObj.familyName,
+              username: response.profileObj.name,
+              picture: response.profileObj.imageUrl
+          };
+          setToken(response.tokenId)
+          window.sessionStorage.setItem('access-token', response.tokenId);
+          setProfile(data)
+          console.log("login received")
+      },
   );
+  useEffect(() => {
+    console.log(profile)
+    if (Object.keys(profile).length !== 0) {
+        axios.get("http://localhost:8000/hotelPortal/login", {
+            withCredentials: true,
+            headers: {
+                'X-CSRFToken': window.sessionStorage.getItem('CSRF-Token'),
+                'access-token': window.sessionStorage.getItem('access-token'),
+                'profile': window.localStorage.getItem('profile'),
+            }
+        }).catch((err) => {
+            if (err.response.status == 403) {
+              window.location.href = 'hotelPortal/#/403';
+            } else if (err.response.status == 404) {
+              window.location.href = 'hotelPortal/#/404';
+            } else if (err.response.status == 500) {
+              window.location.href = 'hotelPortal/#/500';
+            }
+          }).then(()=>{
+            window.localStorage.setItem("profile", JSON.stringify(profile));
+          })
+    }
+}, [profile])
   const onGoogleLogoutSuccess = useCallback(
     response => {
-      setToken("")
-      window.sessionStorage.setItem('access-token',"");
-      setProfile({})
-      window.sessionStorage.setItem('profile',null);
-      // window.location.reload()
+        setToken("")
+        window.sessionStorage.setItem('access-token', "");
+        setProfile({})
+        window.localStorage.setItem('profile', "");
+        window.location.href = 'hotelPortal/#/';
     },
-  );
-  var content = (
-    <div>
-      <p>{window.sessionStorage.getItem('profile')==="null"?"Please login":"Username: "+JSON.parse(window.sessionStorage.getItem('profile'))["username"]}</p>
-      <p>{window.sessionStorage.getItem('profile')==="null"?"":"First Name: "+JSON.parse(window.sessionStorage.getItem('profile'))["first_name"]}</p>
-      <p>{window.sessionStorage.getItem('profile')==="null"?"":"Last Name: "+JSON.parse(window.sessionStorage.getItem('profile'))["last_name"]}</p>
-      <p>{window.sessionStorage.getItem('profile')==="null"?"":"Email: "+JSON.parse(window.sessionStorage.getItem('profile'))["email"]}</p>
-    </div>
+);
+  const onGoogleFail = useCallback(
+    response => {
+        window.location.href = 'hotelPortal/#/fail';
+    }
+);
+var content = (
+  <div>
+  <p>{profile.username === undefined ?"Please login":"Username: "+profile.username}</p>
+  <p>{profile.first_name === undefined?"":"First Name: "+profile.first_name}</p>
+  <p>{profile.last_name === undefined?"":"Last Name: "+profile.last_name}</p>
+  <p>{profile.email === undefined?"":"Email: "+profile.email}</p>
+</div>
   );
     return (
         <Layout className="layout">
@@ -132,12 +143,12 @@ function App() {
                 />
                 <div style={{float:"right", height:"100%"}}>  
                 <Popover content={content} title="Profile" trigger="hover">
-                {
-                window.sessionStorage.getItem('profile') === "null"
-                ? <Avatar icon={<UserOutlined />} /> :
-                <Avatar src={JSON.parse(window.sessionStorage.getItem('profile'))["picture"]}></Avatar>
-                }
-                </Popover>
+                        {
+                            Object.keys(profile).length === 0
+                                ? <Avatar icon={<UserOutlined />} /> :
+                                <Avatar src={profile.picture} imgProps={{ referrerPolicy: "no-referrer" }}></Avatar>
+                        }
+                    </Popover>
                 </div>
                 
             </Header>
